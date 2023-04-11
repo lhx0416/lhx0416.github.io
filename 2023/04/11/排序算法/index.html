@@ -27,9 +27,9 @@
 <meta property="og:description" content="十大排序一图总览 冒泡排序1234567891011121314151617181920&#x2F;&#x2F;冒泡排序&#x2F;&#x2F;从前往后依次比较，如果发现当前数字比后面的数字大，交换位置&#x2F;&#x2F;一次遍历过后 最大的数字出现被交换到数组末尾&#x2F;&#x2F;已经排好序的数字不需要参与对比void bubbleSort(vector&lt;int&gt;&amp; nums)&amp;#123;    bool flag&#x3D;false;&#x2F;&#x2F;可以用一个标">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://oss.interviewguide.cn/img/202205072325169.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/92ff5bc5b760f4bf343b241a1f9ec63b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/64fb6440e8a54f1dae25d49eb31df882.png#pic_center">
 <meta property="article:published_time" content="2023-04-11T02:16:32.000Z">
-<meta property="article:modified_time" content="2023-04-11T05:34:49.964Z">
+<meta property="article:modified_time" content="2023-04-11T05:37:30.820Z">
 <meta property="article:author" content="Ai吃橘子">
 <meta property="article:tag" content="算法基础">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,7 +184,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-04-11 10:16:32 / Modified: 13:34:49" itemprop="dateCreated datePublished" datetime="2023-04-11T10:16:32+08:00">2023-04-11</time>
+      <time title="Created: 2023-04-11 10:16:32 / Modified: 13:37:30" itemprop="dateCreated datePublished" datetime="2023-04-11T10:16:32+08:00">2023-04-11</time>
     </span>
 
   
@@ -213,7 +213,7 @@
 
 <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//归并排序</span></span><br><span class="line"><span class="comment">//归并排序是稳定的排序算法</span></span><br><span class="line"><span class="comment">//归并排序是将数组分为两部分，然后分别对两部分进行排序，最后将两部分合并。分治思想</span></span><br><span class="line"><span class="comment">//归并排序迭代实现</span></span><br><span class="line"><span class="comment">//归并排序的时间复杂度是O(nlogn)</span></span><br><span class="line"><span class="comment">//归并排序的空间复杂度是O(n)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mergeSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> <span class="comment">//分治思想 这一步是分</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i*=<span class="number">2</span>)<span class="comment">//i表示每次合并的两个数组的长度</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j+=<span class="number">2</span>*i)<span class="comment">//j表示每次合并的两个数组的第一个数字的位置</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> left = j;<span class="comment">//左边数组的第一个数字的位置</span></span><br><span class="line">            <span class="type">int</span> mid = j+i<span class="number">-1</span>;<span class="comment">//左边数组的最后一个数字的位置</span></span><br><span class="line">            <span class="type">int</span> right = <span class="built_in">min</span>(j+<span class="number">2</span>*i<span class="number">-1</span>,n<span class="number">-1</span>);<span class="comment">//防止数组越界,右边数组的最后一个数字的位置</span></span><br><span class="line">            <span class="built_in">merge</span>(nums,left,mid,right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums,<span class="type">int</span> left,<span class="type">int</span> mid,<span class="type">int</span> right)</span><span class="comment">//分治思想 这一步是治，合并两个有序数组</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">temp</span><span class="params">(right-left+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="type">int</span> i = left;</span><br><span class="line">    <span class="type">int</span> j = mid+<span class="number">1</span>;<span class="comment">//j表示右边数组的第一个数字的位置</span></span><br><span class="line">    <span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;=mid &amp;&amp; j&lt;=right)<span class="comment">//将两个数组中的数字从小到大放到temp数组中,有点双指针的意思</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i]&lt;=nums[j])</span><br><span class="line">        &#123;</span><br><span class="line">            temp[k++] = nums[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            temp[k++] = nums[j++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;=mid) temp[k++] = nums[i++];<span class="comment">//如果左边的数组还有剩余，就将剩余的数字放到temp数组中</span></span><br><span class="line">    <span class="keyword">while</span>(j&lt;=right) temp[k++] = nums[j++];<span class="comment">//如果右边的数组还有剩余，就将剩余的数字放到temp数组中</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;temp.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        nums[left+i] = temp[i];<span class="comment">//将temp数组中的数字放回到nums数组中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/img_convert/92ff5bc5b760f4bf343b241a1f9ec63b.png" alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/64fb6440e8a54f1dae25d49eb31df882.png#pic_center" alt="img"></p>
 <p>思考：如果是奇数个数字要怎么排序呢？</p>
 <p>答案：一个示例</p>
 <p>1、数组{6,3,5,4,1,2,7}</p>
@@ -241,6 +241,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/04/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1%E6%96%87/" rel="next" title="计算机网络八股文">
+                  计算机网络八股文 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="计算机网络七层结构、四层结构  输入网址到页面显示整个过程  首先查看浏览器缓存，如果缓存中有该URL对应的资源，且没有过期，直接显示页面。  解析URL，生成发送给服务器的HTTP请求信息。确定Web服务器和文件名      DNS查询，查询服务器域名对应的IP地址。DNS查询步骤 首先查看浏览器缓存是否有相应数据 问根域名服务器，根域名服务器会告诉本地DNS应该去哪个顶级域名服务器查询 顶级域">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络八股文">
+<meta property="og:url" content="http://example.com/2023/04/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1%E6%96%87/index.html">
+<meta property="og:site_name" content="Ai吃橘子">
+<meta property="og:description" content="计算机网络七层结构、四层结构  输入网址到页面显示整个过程  首先查看浏览器缓存，如果缓存中有该URL对应的资源，且没有过期，直接显示页面。  解析URL，生成发送给服务器的HTTP请求信息。确定Web服务器和文件名      DNS查询，查询服务器域名对应的IP地址。DNS查询步骤 首先查看浏览器缓存是否有相应数据 问根域名服务器，根域名服务器会告诉本地DNS应该去哪个顶级域名服务器查询 顶级域">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_46.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_47.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_48.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_49.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_50.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_52.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_51.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_53.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_54.png">
+<meta property="og:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_55.png">
+<meta property="article:published_time" content="2023-04-11T06:51:40.000Z">
+<meta property="article:modified_time" content="2023-04-11T07:00:52.347Z">
+<meta property="article:author" content="Ai吃橘子">
+<meta property="article:tag" content="八股文">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hehemagic.github.io/2022/01/03/day29/day29_46.png">
+
+
+<link rel="canonical" href="http://example.com/2023/04/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1%E6%96%87/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1%E6%96%87/","path":"2023/04/11/计算机网络八股文/","title":"计算机网络八股文"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机网络八股文 | Ai吃橘子</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ai吃橘子</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">雄关漫步真如铁，而今迈步从头越</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E5%B1%82%E7%BB%93%E6%9E%84%E3%80%81%E5%9B%9B%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">七层结构、四层结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E6%95%B4%E4%B8%AA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">输入网址到页面显示整个过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E5%92%8CUDP%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.</span> <span class="nav-text">TCP和UDP区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">1.4.</span> <span class="nav-text">TCP三次握手，四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-number">1.5.</span> <span class="nav-text">为什么是三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SYN%E6%94%BB%E5%87%BB"><span class="nav-number">1.6.</span> <span class="nav-text">SYN攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">1.7.</span> <span class="nav-text">为什么四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88TIME-WAIT%E7%AD%89%E5%BE%85%E6%97%B6%E9%97%B4%E4%B8%BA2MSL"><span class="nav-number">1.8.</span> <span class="nav-text">为什么TIME_WAIT等待时间为2MSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E4%BF%9D%E8%AF%81%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="nav-number">1.9.</span> <span class="nav-text">TCP保证可靠传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E5%8D%8A%E8%BF%9E%E6%8E%A5%E5%92%8C%E5%85%A8%E8%BF%9E%E6%8E%A5%E9%98%9F%E5%88%97"><span class="nav-number">1.10.</span> <span class="nav-text">TCP半连接和全连接队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E5%92%8CHTTPS%E5%8C%BA%E5%88%AB"><span class="nav-number">1.11.</span> <span class="nav-text">HTTP和HTTPS区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">1.12.</span> <span class="nav-text">常见状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET%E5%92%8CPOST%E5%8C%BA%E5%88%AB"><span class="nav-number">1.13.</span> <span class="nav-text">GET和POST区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie%E5%92%8CSession%E5%8C%BA%E5%88%AB"><span class="nav-number">1.14.</span> <span class="nav-text">Cookie和Session区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">1.15.</span> <span class="nav-text">HTTPS建立连接过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CA%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="nav-number">1.16.</span> <span class="nav-text">CA证书验证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP1-1"><span class="nav-number">1.17.</span> <span class="nav-text">HTTP1.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP2%E5%9F%BA%E4%BA%8EHTTPS"><span class="nav-number">1.18.</span> <span class="nav-text">HTTP2基于HTTPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E5%92%8CRPC"><span class="nav-number">1.19.</span> <span class="nav-text">HTTP和RPC</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Ai吃橘子</p>
+  <div class="site-description" itemprop="description">日常学习记录</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Ai吃橘子">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ai吃橘子">
+      <meta itemprop="description" content="日常学习记录">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="计算机网络八股文 | Ai吃橘子">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网络八股文
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-11 14:51:40 / Modified: 15:00:52" itemprop="dateCreated datePublished" datetime="2023-04-11T14:51:40+08:00">2023-04-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="七层结构、四层结构"><a href="#七层结构、四层结构" class="headerlink" title="七层结构、四层结构"></a>七层结构、四层结构</h2><p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_46.png" alt="七层结构"></p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_47.png" alt="四层结构"></p>
+<h2 id="输入网址到页面显示整个过程"><a href="#输入网址到页面显示整个过程" class="headerlink" title="输入网址到页面显示整个过程"></a>输入网址到页面显示整个过程</h2><p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_48.png" alt="网址解析"></p>
+<ul>
+<li><p>首先查看浏览器缓存，如果缓存中有该URL对应的资源，且没有过期，直接显示页面。</p>
+</li>
+<li><p>解析URL，生成发送给服务器的HTTP请求信息。确定Web服务器和文件名</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_49.png" alt="URL组成"></p>
+</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_50.png" alt="HTTP消息格式"></p>
+<ul>
+<li>DNS查询，查询服务器域名对应的IP地址。DNS查询步骤<ul>
+<li>首先查看浏览器缓存是否有相应数据</li>
+<li>问根域名服务器，根域名服务器会告诉本地DNS应该去哪个顶级域名服务器查询</li>
+<li>顶级域名服务器，他会告诉本地域名服务器应该去哪个权威域名服务器查询</li>
+<li>权威域名服务器解析域名对应的IP</li>
+</ul>
+</li>
+<li>建立于目标主机的TCP连接</li>
+<li>发送HTTP请求（将报文在TCP&#x2F;IP架构中向下传递并层层封装）</li>
+<li>服务器处理HTTP请求并返回响应HTTP报文（将报文在TCP&#x2F;IP架构中向上传递并层层解封装）</li>
+<li>浏览器解析渲染页面</li>
+<li>当不需要连接后断开TCP连接（四次挥手）</li>
+</ul>
+<h2 id="TCP和UDP区别"><a href="#TCP和UDP区别" class="headerlink" title="TCP和UDP区别"></a>TCP和UDP区别</h2><ul>
+<li><p>连接不同：tcp是面向连接的，传输数据前要先建立连接；udp是不需要连接的即刻传输数据。</p>
+</li>
+<li><p>服务对象：tcp只支持一对一的数据传输；udp支持一对一、一对多、多对多的通信。</p>
+</li>
+<li><p>可靠性方面：tcp是提供可靠交付的，数据可以无差错、不丢失、不重复的按需到达；udp是尽最大努力交付，不保证可靠交付。</p>
+</li>
+<li><p>拥塞控制和流量控制方面：tcp有拥塞控制和流量控制，能保证数据的安全性；但udp没有，即使网络非常拥堵了也不会影响udp的发送速率。</p>
+</li>
+<li><p>首部开销方面：tcp首部长度较长，开销会稍大一些，在没有使用选项字段时是20字节，使用了会更多；udp的是首部只有8字节，是固定不变的。开销较小。</p>
+</li>
+<li><p>传输方式方面：tcp是流式传输，没有边界，但保证顺序可靠；udp是一个包一个包的发送，有边界，但可能会丢包和乱序。</p>
+</li>
+<li><p>分片方式方面：tcp的数据大小如果大于MSS，会在传输层进行分片，目的主机收到后，在传输层组装tcp数据包，如果中途丢失了一个分片，子需要传输丢失的分片；udp的数据大小如果大于MTU会在网络层分片，目的主机收到后在网络层组装完数据向上层传输，如果丢失分片，则需要重传所有数据包，所以一般udp传输的报文数据应该小于MTU。</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_52.png" alt="UDP头部格式"></p>
+</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_51.png" alt="TCP头部格式"></p>
+<h2 id="TCP三次握手，四次挥手"><a href="#TCP三次握手，四次挥手" class="headerlink" title="TCP三次握手，四次挥手"></a>TCP三次握手，四次挥手</h2><p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_53.png" alt="三次握手"></p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_54.png" alt="4次挥手"></p>
+<h2 id="为什么是三次握手"><a href="#为什么是三次握手" class="headerlink" title="为什么是三次握手"></a>为什么是三次握手</h2><ul>
+<li><strong>避免历史连接</strong>：由于网络延迟，旧的syn报文比新的syn报文提前到达服务端。如果是三次握手，在第三次时客户端会给服务端发送rst报文终止连接，而两次握手没办法做到</li>
+<li>同步双方序列号</li>
+<li>三次握手可以解决，不需要更多次握手浪费资源</li>
+</ul>
+<h2 id="SYN攻击"><a href="#SYN攻击" class="headerlink" title="SYN攻击"></a>SYN攻击</h2><ul>
+<li>攻击者短时间内伪造不同的IP地址，向服务器发送SYN报文，让服务器接受以为有正常的连接，会在SYN接收队列中记录并回复应答报文，但没有后续，直到将服务器的SYN接收队列占满，真正正常的用户无法连接服务器</li>
+<li>可以增大SYN接受队列的长度、减少SYN+ACK重传次数</li>
+</ul>
+<h2 id="为什么四次挥手"><a href="#为什么四次挥手" class="headerlink" title="为什么四次挥手"></a>为什么四次挥手</h2><ul>
+<li>因为需要双方都处理完数据之后才能关闭连接，因此需要双方都主动发送FIN报文，并接收到对方回应</li>
+</ul>
+<h2 id="为什么TIME-WAIT等待时间为2MSL"><a href="#为什么TIME-WAIT等待时间为2MSL" class="headerlink" title="为什么TIME_WAIT等待时间为2MSL"></a>为什么TIME_WAIT等待时间为2MSL</h2><ul>
+<li>如果第四次挥手ACK报文丢失，服务端没有断开连接，服务端会重发FIN报文，所以客户端在发送完ACK报文后需要等待。2MSL正好是允许报文丢失一次的时间</li>
+</ul>
+<h2 id="TCP保证可靠传输"><a href="#TCP保证可靠传输" class="headerlink" title="TCP保证可靠传输"></a>TCP保证可靠传输</h2><ul>
+<li><p>重传机制：根据序列号和确认应答号，判断是否收到数据包。<strong>重传解决数据包丢失情况</strong></p>
+<ul>
+<li>超时重传：数据包丢失；确认应答丢失。<strong>超时重传时间应该略大于报文往返时间RTT</strong>。每遇到超时重传，会把下次超时时间翻倍，两次超时后，不再进行重传</li>
+<li>快速重传：连续收到3次相同的ACK，说明中间有包丢失，进行重传。解决了超时时间设置问题。但不知道重传哪几个报文</li>
+<li>SACK：选择性确认。在TCP头部字段中加入SACK，将已接受到的数据发送给发送方，发送方就知道重传哪些报文</li>
+<li>D-SACK：有哪些数据被重复接受了。可以判断到底是，数据包丢失或ACK丢失或网络延迟</li>
+</ul>
+</li>
+<li><p>滑动窗口：窗口大小（字节数）就是指<strong>无需等待确认应答，而可以继续发送数据长度的最大值</strong>。TCP头部的Window字段就是窗口大小，一般由接收方决定。</p>
+</li>
+<li><p>流量控制：根据接收方的接受能力控制发送数据量。</p>
+<ul>
+<li>接收端没有及时处理缓冲区的数据，导致接收窗口变小，发送窗口也变小</li>
+<li>窗口大小为0后，发送方无法给接受方发送数据。发送方隔一段时间，会向接收方发送窗口探测报文</li>
+</ul>
+</li>
+<li><p>拥塞控制：在网络拥挤的情况下，避免发送的数据填满整个网络。<strong>拥塞窗口，根据网络情况动态改变的窗口大小，发送窗口最终的值为拥塞窗口和流量控制窗口的最小值</strong></p>
+<ul>
+<li>慢启动：刚开始拥塞窗口大小成指数型增强：1，2，4…..</li>
+<li>拥塞避免：当窗口大小超过thresh阈值后，拥塞窗口大小成线性增长，每收到一个ACK增加<strong>1&#x2F;窗口大小</strong>，接收到一整个窗口ACK，增加1</li>
+<li>拥塞发生：触发重传机制。<strong>超时重传</strong>后，拥塞窗口值直接变为1，thresh阈值为原来的1&#x2F;2。<strong>快速重传</strong>后，拥塞窗口的值变为原来的1&#x2F;2，阈值不变</li>
+<li>快速恢复：在快速重传后使用，拥塞窗口变为thresh+3，重传数据包，如果收到重复的ACK，拥塞窗口值+1。收到新的ACK后，恢复过程结束，窗口大小变为thresh阈值</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_55.png" alt="拥塞控制"></p>
+</li>
+</ul>
+<h2 id="TCP半连接和全连接队列"><a href="#TCP半连接和全连接队列" class="headerlink" title="TCP半连接和全连接队列"></a>TCP半连接和全连接队列</h2><ul>
+<li>服务端收到客户端发起的 SYN 请求后，<strong>内核会把该连接存储到半连接队列</strong>，并向客户端响应 SYN+ACK，接着客户端会返回 ACK，服务端收到第三次握手的 ACK 后，<strong>内核会把连接从半连接队列移除，然后创建新的完全的连接，并将其添加到 accept 队列，等待进程调用 accept 函数时把连接取出来。</strong></li>
+</ul>
+<h2 id="HTTP和HTTPS区别"><a href="#HTTP和HTTPS区别" class="headerlink" title="HTTP和HTTPS区别"></a>HTTP和HTTPS区别</h2><ul>
+<li>HTTP是明文传输，存在安全风险。HTTPS对传输数据进行加密，更加安全</li>
+<li>HTTP连接建立只需要TCP三次握手，而HTTPS还需要进行SSL&#x2F;TLS握手</li>
+<li>HTTP端口号为80，HTTPS为443</li>
+<li>HTTPS需要向CA申请数字证书，证明服务器的身份</li>
+</ul>
+<h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><ul>
+<li><p><code>1xx</code> 类状态码属于<strong>提示信息</strong>，是协议处理中的一种中间状态，实际用到的比较少</p>
+</li>
+<li><pre><code>2xx
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">  类状态码表示服务器</span><br><span class="line"></span><br><span class="line">  成功</span><br><span class="line"></span><br><span class="line">  处理了客户端的请求，也是我们最愿意看到的状态</span><br><span class="line"></span><br><span class="line">  - 200：一切正常</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  3xx</span><br></pre></td></tr></table></figure>
+
+ 
+
+类状态码表示客户端请求的资源发生了变动，需要客户端用新的 URL 重新发送请求获取资源，也就是
+
+重定向
+
+- 301：永久重定向
+- 302：临时重定向
+- 304：重定向存在缓存文件
+</code></pre>
+</li>
+<li><pre><code>4xx
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">  类状态码表示客户端发送的</span><br><span class="line"></span><br><span class="line">  报文有误</span><br><span class="line"></span><br><span class="line">  ，服务器无法处理，也就是错误码的含义</span><br><span class="line"></span><br><span class="line">  - 400：表示客户端请求的报文有错误</span><br><span class="line">  - 403：服务器禁止访问资源</span><br><span class="line">  - 404：请求资源不存在或找不到</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  5xx</span><br></pre></td></tr></table></figure>
+
+ 
+
+类状态码表示客户端请求报文正确，但是
+
+服务器处理时内部发生了错误
+
+，属于服务器端的错误码
+
+- 500：服务端有错误
+- 501：客户端请求功能还不支持
+- 503：服务器很忙，无法响应
+</code></pre>
+</li>
+</ul>
+<h2 id="GET和POST区别"><a href="#GET和POST区别" class="headerlink" title="GET和POST区别"></a>GET和POST区别</h2><ul>
+<li>GET是从服务器获得指定资源，POST是请求对指定资源做相应的处理</li>
+<li>GET的请求参数一般在URL中，浏览器会对URL长度有限制，POST数据在报文body中</li>
+</ul>
+<h2 id="Cookie和Session区别"><a href="#Cookie和Session区别" class="headerlink" title="Cookie和Session区别"></a>Cookie和Session区别</h2><ul>
+<li>Cookie一般用来保存用户信息（登录信息，在cookie中放入token）。Session主要在服务端记录用户状态（添加购物车，使用session表明用户身份）</li>
+<li>Cookie 数据保存在客户端(浏览器端)，Session 数据保存在服务器端</li>
+</ul>
+<h2 id="HTTPS建立连接过程"><a href="#HTTPS建立连接过程" class="headerlink" title="HTTPS建立连接过程"></a>HTTPS建立连接过程</h2><ul>
+<li>ClientHello：由客户端向服务器发起加密通信请求，包含了SSL协议版本、客户端随机数C、支持的密码套件</li>
+<li>SeverHello：确认SSL协议版本、服务端随机数S、确认采用的密码套件、CA证书</li>
+<li>客户端回应<ul>
+<li>首先通过浏览器或操作系统中的CA公钥，验证服务器身份</li>
+<li>从数字证书中取出<strong>服务器公钥</strong>，使用它加密报文：随机数pre-master、之前数据的摘要。之后都采用加密传输</li>
+</ul>
+</li>
+<li>服务器回应<ul>
+<li>根据pre-master、C、S计算出后续数据传输的密钥</li>
+<li>将之前的信息摘要，通过密钥加密后发送给客户端</li>
+</ul>
+</li>
+</ul>
+<h2 id="CA证书验证过程"><a href="#CA证书验证过程" class="headerlink" title="CA证书验证过程"></a>CA证书验证过程</h2><ul>
+<li>CA 签发证书的过程：<ul>
+<li>首先 CA 会把持有者的公钥、用途、颁发者、有效时间等信息打成一个包，然后对这些信息进行 Hash 计算，得到一个 Hash 值；</li>
+<li>然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature，也就是 CA 对证书做了签名；</li>
+<li>最后将 Certificate Signature 添加在文件证书上，形成数字证书</li>
+</ul>
+</li>
+<li>客户端校验服务端的数字证书的过程：<ul>
+<li>首先客户端会使用同样的 Hash 算法获取该证书的 Hash 值 H1；</li>
+<li>通常浏览器和操作系统中集成了 CA 的公钥信息，浏览器收到证书后可以使用 CA 的公钥解密 Certificate Signature 内容，得到一个 Hash 值 H2 ；</li>
+<li>最后比较 H1 和 H2，如果值相同，则为可信赖的证书，否则则认为证书不可信。</li>
+</ul>
+</li>
+</ul>
+<h2 id="HTTP1-1"><a href="#HTTP1-1" class="headerlink" title="HTTP1.1"></a>HTTP1.1</h2><ul>
+<li>简单：基本报文格式header+body，头部信息key-value的形式，容易理解</li>
+<li>灵活易扩展：状态码、头字段等都没有固定死，允许开发人员自定义</li>
+<li>应用广泛跨平台</li>
+<li>长连接：没有主动断开连接，就不断开连接。超过一定的时间，断开连接</li>
+<li>无状态</li>
+<li>明文传输不安全</li>
+<li>管道网络传输：可以同时发起多个请求，解决了请求的队头阻塞问题。但响应需要按顺序接受，响应存在对头阻塞问题</li>
+</ul>
+<h2 id="HTTP2基于HTTPS"><a href="#HTTP2基于HTTPS" class="headerlink" title="HTTP2基于HTTPS"></a>HTTP2基于HTTPS</h2><ul>
+<li>头部压缩：同时发出多个请求，如果头部信息相同，会消除重复部分。<code>HPACK</code>,维护一张头信息表</li>
+<li>二进制格式：头信息和数据体都是二进制格式</li>
+<li>并发传输：提出了Stream概念，多个Stream复用同一个TCP。不同的请求具有不同的streamID</li>
+</ul>
+<h2 id="HTTP和RPC"><a href="#HTTP和RPC" class="headerlink" title="HTTP和RPC"></a>HTTP和RPC</h2><ul>
+<li>HTTP和RPC都是协议，底层都可以基于TCP或UDP进行实现，只是定义了不同消息格式的应用层协议</li>
+<li>RPC要比HTTP1.1效率更高</li>
+<li>RPC实现服务调用时，需要双方都使用统一的RPC框架，跨操作系统，同一编程语言。HTTP不需要关注对方使用的编程语言，通用性灵活度更强</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/" rel="tag"># 八股文</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/11/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" rel="prev" title="排序算法">
+                  <i class="fa fa-chevron-left"></i> 排序算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ai吃橘子</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
