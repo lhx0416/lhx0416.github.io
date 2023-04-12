@@ -116,7 +116,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -138,6 +138,75 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%AB%E8%82%A1%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ai吃橘子">
+      <meta itemprop="description" content="学习记录">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ai吃橘子">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%AB%E8%82%A1%E6%96%87/" class="post-title-link" itemprop="url">操作系统八股文</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-12 11:18:26 / Modified: 11:18:42" itemprop="dateCreated datePublished" datetime="2023-04-12T11:18:26+08:00">2023-04-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -175,9 +244,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-11 14:51:40 / Modified: 17:32:53" itemprop="dateCreated datePublished" datetime="2023-04-11T14:51:40+08:00">2023-04-11</time>
+      <time title="Created: 2023-04-11 14:51:40" itemprop="dateCreated datePublished" datetime="2023-04-11T14:51:40+08:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-12 09:59:03" itemprop="dateModified" datetime="2023-04-12T09:59:03+08:00">2023-04-12</time>
     </span>
 
   
@@ -379,28 +454,16 @@
 <h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><ul>
 <li><p><code>1xx</code> 类状态码属于<strong>提示信息</strong>，是协议处理中的一种中间状态，实际用到的比较少</p>
 </li>
-<li><pre><code>2xx
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   类状态码表示服务器成功处理了客户端的请求，也是我们最愿意看到的状态</span><br><span class="line"></span><br><span class="line">  - 200：一切正常</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  3xx</span><br></pre></td></tr></table></figure>
-
-类状态码表示客户端请求的资源发生了变动，需要客户端用新的 URL 重新发送请求获取资源，也就是
-
-重定向
+<li><pre><code>2xx类状态码表示服务器成功处理了客户端的请求，也是我们最愿意看到的状态
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 200：一切正常</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  3xx类状态码表示客户端请求的资源发生了变动，需要客户端用新的 URL 重新发送请求获取资源，也就是重定向</span><br></pre></td></tr></table></figure>
 
 - 301：永久重定向
 - 302：临时重定向
 - 304：重定向存在缓存文件
 </code></pre>
 </li>
-<li><pre><code>4xx
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">  类状态码表示客户端发送的</span><br><span class="line"></span><br><span class="line">  报文有误</span><br><span class="line"></span><br><span class="line">  ，服务器无法处理，也就是错误码的含义</span><br><span class="line"></span><br><span class="line">  - 400：表示客户端请求的报文有错误</span><br><span class="line">  - 403：服务器禁止访问资源</span><br><span class="line">  - 404：请求资源不存在或找不到</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  5xx</span><br></pre></td></tr></table></figure>
-
- 
-
-类状态码表示客户端请求报文正确，但是
-
-服务器处理时内部发生了错误
-
-，属于服务器端的错误码
+<li><pre><code>4xx类状态码表示客户端发送的报文有误，服务器无法处理，也就是错误码的含义
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 400：表示客户端请求的报文有错误</span><br><span class="line">  - 403：服务器禁止访问资源</span><br><span class="line">  - 404：请求资源不存在或找不到</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  5xx类状态码表示客户端请求报文正确，但是服务器处理时内部发生了错误，属于服务器端的错误码</span><br></pre></td></tr></table></figure>
 
 - 500：服务端有错误
 - 501：客户端请求功能还不支持
@@ -524,9 +587,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-11 10:16:32 / Modified: 21:40:50" itemprop="dateCreated datePublished" datetime="2023-04-11T10:16:32+08:00">2023-04-11</time>
+      <time title="Created: 2023-04-11 10:16:32" itemprop="dateCreated datePublished" datetime="2023-04-11T10:16:32+08:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-12 11:37:11" itemprop="dateModified" datetime="2023-04-12T11:37:11+08:00">2023-04-12</time>
     </span>
 
   
@@ -550,7 +619,7 @@
 
 
 
-<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//选择排序</span></span><br><span class="line"><span class="comment">//不稳定</span></span><br><span class="line"><span class="comment">//每次遍历都去找未排序数组中的最小值的下标</span></span><br><span class="line"><span class="comment">//利用swap函数，将找到的当前回合找到的最小值放在已经排好序的数组后面</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">selectSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> minIndex;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        minIndex = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;nums.<span class="built_in">size</span>();j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[minIndex]&lt;nums[j])</span><br><span class="line">            &#123;</span><br><span class="line">                minInde = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">swap</span>(nums[i],nums[minIndex]);<span class="comment">//因为存在这个swap函数，可能破坏稳定性，所以是不稳定的排序。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//选择排序</span></span><br><span class="line"><span class="comment">//不稳定</span></span><br><span class="line"><span class="comment">//每次遍历都去找未排序数组中的最小值的下标</span></span><br><span class="line"><span class="comment">//利用swap函数，将找到的当前回合找到的最小值放在已经排好序的数组后面</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">selectSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> minIndex;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        minIndex = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;nums.<span class="built_in">size</span>();j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[j]&lt;nums[minIndex])</span><br><span class="line">            &#123;</span><br><span class="line">                minInde = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">swap</span>(nums[i],nums[minIndex]);<span class="comment">//因为存在这个swap函数，可能破坏稳定性，所以是不稳定的排序。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入排序</span></span><br><span class="line"><span class="comment">//冒泡排序是从头到尾依次比较，如果发现当前数字比后面的数字大，交换位置  比较是在未排序的数组中进行</span></span><br><span class="line"><span class="comment">//选择排序是每次遍历都去找未排序数组中的最小值的下标，然后将最小值放在已经排好序的数组后面  比较是在未排序的数组中进行</span></span><br><span class="line"><span class="comment">//插入排序是从第二个数字开始插入，第一个数字默认已经排好序，然后将当前数字插入到合适的位置，每次都是拿新的元素在已经排好序的数组中进行比较，比较是从后往前进行的</span></span><br><span class="line"><span class="comment">//稳定排序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insertSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;nums.<span class="built_in">size</span>();i++)<span class="comment">//从第二个数字开始插入,第一个数字默认已经排好序</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> temp = nums[i];<span class="comment">//记录当前需要插入的数字</span></span><br><span class="line">        <span class="type">int</span> j = i<span class="number">-1</span>;<span class="comment">//记录当前需要插入的数字的前一个数字的下标</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span> &amp;&amp; nums[j]&gt;temp)<span class="comment">//如果当前数字比前一个数字小，就将前一个数字后移</span></span><br><span class="line">        &#123;</span><br><span class="line">            nums[j+<span class="number">1</span>] = nums[j];<span class="comment">//将前一个数字后移</span></span><br><span class="line">            j--;<span class="comment">//继续比较前一个数字，直到找到合适的位置</span></span><br><span class="line">        &#125;</span><br><span class="line">        nums[j+<span class="number">1</span>] = temp;<span class="comment">//将当前数字插入到合适的位置</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -561,7 +630,6 @@
 
 <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//归并排序</span></span><br><span class="line"><span class="comment">//归并排序是稳定的排序算法</span></span><br><span class="line"><span class="comment">//归并排序是将数组分为两部分，然后分别对两部分进行排序，最后将两部分合并。分治思想</span></span><br><span class="line"><span class="comment">//归并排序迭代实现</span></span><br><span class="line"><span class="comment">//归并排序的时间复杂度是O(nlogn)</span></span><br><span class="line"><span class="comment">//归并排序的空间复杂度是O(n)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mergeSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> <span class="comment">//分治思想 这一步是分</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i*=<span class="number">2</span>)<span class="comment">//i表示每次合并的两个数组的长度</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j+=<span class="number">2</span>*i)<span class="comment">//j表示每次合并的两个数组的第一个数字的位置</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> left = j;<span class="comment">//左边数组的第一个数字的位置</span></span><br><span class="line">            <span class="type">int</span> mid = j+i<span class="number">-1</span>;<span class="comment">//左边数组的最后一个数字的位置</span></span><br><span class="line">            <span class="type">int</span> right = <span class="built_in">min</span>(j+<span class="number">2</span>*i<span class="number">-1</span>,n<span class="number">-1</span>);<span class="comment">//防止数组越界,右边数组的最后一个数字的位置</span></span><br><span class="line">            <span class="built_in">merge</span>(nums,left,mid,right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums,<span class="type">int</span> left,<span class="type">int</span> mid,<span class="type">int</span> right)</span><span class="comment">//分治思想 这一步是治，合并两个有序数组</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">temp</span><span class="params">(right-left+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="type">int</span> i = left;</span><br><span class="line">    <span class="type">int</span> j = mid+<span class="number">1</span>;<span class="comment">//j表示右边数组的第一个数字的位置</span></span><br><span class="line">    <span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;=mid &amp;&amp; j&lt;=right)<span class="comment">//将两个数组中的数字从小到大放到temp数组中,有点双指针的意思</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i]&lt;=nums[j])</span><br><span class="line">        &#123;</span><br><span class="line">            temp[k++] = nums[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            temp[k++] = nums[j++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;=mid) temp[k++] = nums[i++];<span class="comment">//如果左边的数组还有剩余，就将剩余的数字放到temp数组中</span></span><br><span class="line">    <span class="keyword">while</span>(j&lt;=right) temp[k++] = nums[j++];<span class="comment">//如果右边的数组还有剩余，就将剩余的数字放到temp数组中</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;temp.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        nums[left+i] = temp[i];<span class="comment">//将temp数组中的数字放回到nums数组中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/64fb6440e8a54f1dae25d49eb31df882.png#pic_center" alt="img"></p>
 <p>思考：如果是奇数个数字要怎么排序呢？</p>
 <p>答案：一个示例</p>
 <p>1、数组{6,3,5,4,1,2,7}</p>
