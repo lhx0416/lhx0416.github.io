@@ -177,7 +177,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-04-12 11:18:26 / Modified: 11:18:42" itemprop="dateCreated datePublished" datetime="2023-04-12T11:18:26+08:00">2023-04-12</time>
+      <time title="Created: 2023-04-12 11:18:26 / Modified: 20:05:06" itemprop="dateCreated datePublished" datetime="2023-04-12T11:18:26+08:00">2023-04-12</time>
     </span>
 
   
@@ -190,7 +190,155 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <h2 id="内核是怎么工作的？"><a href="#内核是怎么工作的？" class="headerlink" title="内核是怎么工作的？"></a>内核是怎么工作的？</h2><p>内核具有很高的权限，可以控制 cpu、内存、硬盘等硬件，而应用程序具有的权限很小，因此大多数操作系统，把内存分成了两个区域：</p>
+<ul>
+<li>内核空间，这个内存空间只有内核程序可以访问；</li>
+<li>用户空间，这个内存空间专门给应用程序使用；</li>
+</ul>
+<p>用户空间的代码只能访问一个局部的内存空间，而内核空间的代码可以访问所有内存空间。因此，当程序使用用户空间时，我们常说该程序在<strong>用户态</strong>执行，而当程序使内核空间时，程序则在<strong>内核态</strong>执行。</p>
+<p>应用程序如果需要进入内核空间，就需要通过系统调用，下面来看看系统调用的过程：</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%86%85%E6%A0%B8/systemcall.png" alt="img"></p>
+<p>内核程序执行在内核态，用户程序执行在用户态。当应用程序使用系统调用时，会产生一个中断。发生中断后， CPU 会中断当前在执行的用户程序，转而跳转到中断处理程序，也就是开始执行内核程序。内核处理完后，主动触发中断，把 CPU 执行权限交回给用户程序，回到用户态继续工作。</p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><ul>
+<li>进程是对运行时程序的封装，是<strong>操作系统进行资源调度和分配的基本单位</strong>，<strong>实现操作系统的并发</strong>。线程是进程的子任务，<strong>CPU调度和分派的基本单位</strong>，用于<strong>保证程序的实时性</strong>，<strong>实现进程内部的并发</strong>；</li>
+<li>每个线程都独自占用一个虚拟处理器、独自的寄存器组，指令计数器和处理器状态，完成不同的任务，但是<strong>共享同一地址空间</strong>，<strong>打开的文件队列</strong>和<strong>其他内核资源</strong>；</li>
+<li>区别：<ul>
+<li>一个线程只能属于一个进程，一个进程可以有多个线程，线程依赖于进程而存在</li>
+<li>进程切换开销大，在创建或撤消进程时，系统都要为之分配或回收资源。线程切换只须保存和设置少量寄存器的内容，切换速度快，同一个进程的线程都具有同一个页表，那么在切换的时候不需要切换页表。</li>
+<li>进程间通信复杂。同一进程中的多个线程具有相同的地址空间，通信比较容易，例如可以使用<strong>全局变量</strong></li>
+<li>进程间不会相互影响，一个线程挂掉会导致整个进程挂掉</li>
+</ul>
+</li>
+</ul>
+<h2 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h2><p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/8-%E8%BF%9B%E7%A8%8B%E4%BA%94%E4%B8%AA%E7%8A%B6%E6%80%81.jpg" alt="进程五种状态的变迁"></p>
+<ul>
+<li>创建状态：进程正在被创建；</li>
+<li>就绪状态：进程被加入到就绪队列中等待CPU调度运行；</li>
+<li>执行状态：进程正在被运行；</li>
+<li>等待阻塞状态：进程因为某种原因，比如等待I&#x2F;O，等待设备，而暂时不能运行；</li>
+<li>终止状态：进程运行完毕；</li>
+</ul>
+<h2 id="进程通信方式"><a href="#进程通信方式" class="headerlink" title="进程通信方式"></a>进程通信方式</h2><ul>
+<li>匿名管道：本质是内核缓冲区，可用于亲缘进程（父子进程，兄弟进程）间通信，半双工，一端读、一端写，先进先出；</li>
+<li>有名管道：本质是一个文件，可以提供给没有亲缘关系的进程通信；</li>
+<li>管道的通信方式是效率低的，因此管道不适合进程间频繁地交换数据</li>
+<li>消息队列：存放于内核的某个消息链表，允许多个进程进行读写；<strong>不适合比较大数据的传输</strong></li>
+<li><strong>消息队列通信过程中，存在用户态与内核态之间的数据拷贝开销</strong>，因为进程写入数据到内核中的消息队列时，会发生从用户态拷贝数据到内核态的过程，同理另一进程读取内核中的消息数据时，会发生从内核态拷贝数据到用户态的过程。</li>
+<li>套接字：套接字主要用于不同主机的进程之间的通信；</li>
+<li>信号：一种异步通信方式，信号可以在任何时候发给某一进程；</li>
+<li>信号量：信号量是一个计数器，<strong>原子的P、V操作</strong>，用于进程同步；</li>
+<li>共享内存：多个进程可以直接读写同一块内存空间，共享内存如果中间涉及到写操作，往往需要同步机制进行辅助，比如信号量；</li>
+<li>线程间通信方式：临界区，互斥量（锁），信号量，信号</li>
+</ul>
+<h2 id="互斥的概念"><a href="#互斥的概念" class="headerlink" title="互斥的概念"></a>互斥的概念</h2><p>由于多线程执行操作共享变量的这段代码可能会导致竞争状态，因此我们将此段代码称为<strong>临界区（*critical section*），它是访问共享资源的代码片段，一定不能给多线程同时执行。</strong></p>
+<p>我们希望这段代码是<strong>互斥（*mutualexclusion*）的，也就说保证一个线程在临界区执行时，其他线程应该被阻止进入临界区</strong>，说白了，就是这段代码执行过程中，最多只能出现一个线程。</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BA%92%E6%96%A5%E4%B8%8E%E5%90%8C%E6%AD%A5/10-%E4%B8%B4%E7%95%8C%E5%8C%BA.jpg" alt="互斥"></p>
+<p>另外，说一下互斥也并不是只针对多线程。在多进程竞争共享资源的时候，也同样是可以使用互斥的方式来避免资源竞争造成的资源混乱。</p>
+<h2 id="同步的概念"><a href="#同步的概念" class="headerlink" title="同步的概念"></a>同步的概念</h2><p><strong>所谓同步，就是并发进程&#x2F;线程在一些关键点上可能需要互相等待与互通消息，这种相互制约的等待与互通信息称为进程&#x2F;线程同步</strong>。</p>
+<p>举个生活的同步例子，你肚子饿了想要吃饭，你叫妈妈早点做菜，妈妈听到后就开始做菜，但是在妈妈没有做完饭之前，你必须阻塞等待，等妈妈做完饭后，自然会通知你，接着你吃饭的事情就可以进行了。</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BA%92%E6%96%A5%E4%B8%8E%E5%90%8C%E6%AD%A5/11-%E5%90%83%E9%A5%AD%E5%90%8C%E6%AD%A5.jpg" alt="吃饭与做菜的同步关系"></p>
+<p>注意，同步与互斥是两种不同的概念：</p>
+<ul>
+<li>同步就好比：「操作 A 应在操作 B 之前执行」，「操作 C 必须在操作 A 和操作 B 都完成之后才能执行」等；</li>
+<li>互斥就好比：「操作 A 和操作 B 不能在同一时刻执行」；</li>
+</ul>
+<h2 id="单核机器上写多线程程序，是否需要考虑加锁，为什么？"><a href="#单核机器上写多线程程序，是否需要考虑加锁，为什么？" class="headerlink" title="单核机器上写多线程程序，是否需要考虑加锁，为什么？"></a>单核机器上写多线程程序，是否需要考虑加锁，为什么？</h2><ul>
+<li>仍然需要线程锁，因为线程锁通常用来实现线程的同步和通信，在单核机器上的多线程程序，<strong>仍然存在线程同步的问题</strong>。因为在<strong>抢占式操作系统中</strong>，通常为每个线程分配一个时间片，当某个线程时间片耗尽时，操作系统会将其挂起，然后运行另一个线程，（如果这两个线程共享某些数据，不使用线程锁的前提下，可能会导致共享数据修改引起冲突）</li>
+</ul>
+<h2 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h2><p>当两个线程为了保护两个不同的共享资源而使用了两个互斥锁，那么这两个互斥锁应用不当的时候，可能会造成<strong>两个线程都在等待对方释放锁</strong>，在没有外力的作用下，这些线程会一直相互等待，就没办法继续运行，这种情况就是发生了<strong>死锁</strong>。</p>
+<p>举个例子，小林拿了小美房间的钥匙，而小林在自己的房间里，小美拿了小林房间的钥匙，而小美也在自己的房间里。如果小林要从自己的房间里出去，必须拿到小美手中的钥匙，但是小美要出去，又必须拿到小林手中的钥匙，这就形成了死锁。</p>
+<p>死锁只有<strong>同时满足</strong>以下四个条件才会发生：</p>
+<ul>
+<li>互斥条件；</li>
+<li>持有并等待条件；</li>
+<li>不可剥夺条件；</li>
+<li>环路等待条件；</li>
+</ul>
+<h2 id="避免死锁问题的发生"><a href="#避免死锁问题的发生" class="headerlink" title="避免死锁问题的发生"></a>避免死锁问题的发生</h2><p>前面我们提到，产生死锁的四个必要条件是：互斥条件、持有并等待条件、不可剥夺条件、环路等待条件。那么避免死锁问题就只需要破环其中一个条件就可以，最常见的并且可行的就是<strong>使用资源有序分配法，来破环环路等待条件</strong>。</p>
+<h2 id="协程（微线程，极高的运行效率，没有线程切换开销、没有锁机制开销）"><a href="#协程（微线程，极高的运行效率，没有线程切换开销、没有锁机制开销）" class="headerlink" title="协程（微线程，极高的运行效率，没有线程切换开销、没有锁机制开销）"></a>协程（微线程，极高的运行效率，没有线程切换开销、没有锁机制开销）</h2><ul>
+<li>协程看上去也是子程序，<strong>但内部可中断</strong>，然后转而执行别的子程序，在适当的时候再返回来接着执行；</li>
+<li>协程和线程区别，<strong>协程有极高的运行效率，没有线程切换开销、没有锁机制开销</strong><ul>
+<li>和多线程比，协程最大的优势就是<strong>没有线程切换的开销</strong>，线程数量越多，协程的性能优势就越明显；</li>
+<li><strong>没有锁机制的开销（只需判断状态）</strong>，因为只有一个线程，不存在同时写变量冲突；</li>
+</ul>
+</li>
+</ul>
+<h2 id="进程调度策略"><a href="#进程调度策略" class="headerlink" title="进程调度策略"></a>进程调度策略</h2><ul>
+<li>先来先服务：可能会导致阻塞</li>
+<li>最短作业优先调度：提高吞吐量，但是长任务可能无法被调度</li>
+<li>高相应比优先调度：根据公式计算相应比，等待时间&#x2F;要求服务的时间，要求服务的时间不可预知，不实用</li>
+<li>时间片轮转：每个进程使用固定长度的CPU时间。时间设置太低，进程切换频繁，效率低；时间片太大，短作业的响应时间变长</li>
+<li>最高优先级调度: 可能导致低优先级作业无法被调度</li>
+<li>多级反馈队列调度：多个队列之间是最高优先级调度；单个队列里面是时间片轮转</li>
+</ul>
+<h2 id="内存页面置换算法"><a href="#内存页面置换算法" class="headerlink" title="内存页面置换算法"></a>内存页面置换算法</h2><ul>
+<li>最佳页面置换算法：替换掉未来最长时间不访问的页面。但无法预测未来情况，只是一种理想算法</li>
+<li>先进先出置换算法</li>
+<li>最近最久未使用置换算法（LRU）：选择最近最长时间没有被访问过的页面进行置换。需要在内存中维护一个所有页面的链表，实现难度大。</li>
+<li>时钟页面置换算法：类似于LRU和FIFO的结合。所有页面保存在类似钟面的环形链表，缺页中断时判断表针指向页面，<strong>若页面R位为0</strong>，则选择此页面进行置换；<strong>否则R&#x3D;1</strong>，清除R位直到找到R&#x3D;0的页面为止；</li>
+<li>最近最少使用置换算法（LFU）：<strong>选择「访问次数」最少的那个页面，并将其淘汰</strong>。使用计数器，记录每个页面被访问次数</li>
+</ul>
+<h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><ul>
+<li>阻塞IO：调用者调用一个函数，需要等待这个函数返回之后，才可以继续进行操作</li>
+<li>非阻塞IO：每隔一段时间区检测IO事件，检测间隙可以继续操作</li>
+<li>信号驱动IO：运行端准备好数据，给调用端一个信号，调用端接收数据，不需要频繁检测</li>
+<li>多路复用IO：不需要尝试获取数据，而是先开启另外一个线程来监控数据的状态，等到有数据的时候再同步获取数据，而在没数据的时候也是不需要等待的</li>
+<li>异步IO：通过调用aio_read函数，那么内核会先将数据读取好，并且复制到用户空间之后，再执行回调函数通知应用程序，此时应用程序就可以直接从用户空间中读取数据，而不需要再从内核中读取数据</li>
+</ul>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_37.png" alt="上下文切换对比"></p>
+<h2 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h2><p>传统 I&#x2F;O 的工作方式是，数据读取和写入是从用户空间到内核空间来回复制，而内核空间的数据是通过操作系统层面的 I&#x2F;O 接口从磁盘读取或写入。</p>
+<p>代码通常如下，一般会需要两个系统调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read(file, tmp_buf, len);</span><br><span class="line">write(socket, tmp_buf, len);</span><br></pre></td></tr></table></figure>
+
+<p>代码很简单，虽然就两行代码，但是这里面发生了不少的事情。</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_40.png" alt="传统数据拷贝"></p>
+<p>首先，期间共<strong>发生了 4 次用户态与内核态的上下文切换</strong>，因为发生了两次系统调用，一次是 <code>read()</code> ，一次是 <code>write()</code>，每次系统调用都得先从用户态切换到内核态，等内核完成任务后，再从内核态切换回用户态。</p>
+<p>上下文切换到成本并不小，一次切换需要耗时几十纳秒到几微秒，虽然时间看上去很短，但是在高并发的场景下，这类时间容易被累积和放大，从而影响系统的性能。</p>
+<p>其次，还<strong>发生了 4 次数据拷贝</strong>，其中两次是 DMA 的拷贝，另外两次则是通过 CPU 拷贝的，下面说一下这个过程：</p>
+<ul>
+<li><em>第一次拷贝</em>，把磁盘上的数据拷贝到操作系统内核的缓冲区里，这个拷贝的过程是通过 DMA 搬运的。</li>
+<li><em>第二次拷贝</em>，把内核缓冲区的数据拷贝到用户的缓冲区里，于是我们应用程序就可以使用这部分数据了，这个拷贝到过程是由 CPU 完成的。</li>
+<li><em>第三次拷贝</em>，把刚才拷贝到用户的缓冲区里的数据，再拷贝到内核的 socket 的缓冲区里，这个过程依然还是由 CPU 搬运的。</li>
+<li><em>第四次拷贝</em>，把内核的 socket 缓冲区里的数据，拷贝到网卡的缓冲区里，这个过程又是由 DMA 搬运的。</li>
+</ul>
+<p>我们回过头看这个文件传输的过程，我们只是搬运一份数据，结果却搬运了 4 次，过多的数据拷贝无疑会消耗 CPU 资源，大大降低了系统性能。</p>
+<p>这种简单又传统的文件传输方式，存在冗余的上文切换和数据拷贝，在高并发系统里是非常糟糕的，多了很多不必要的开销，会严重影响系统性能。</p>
+<p>所以，<strong>要想提高文件传输的性能，就需要减少「用户态与内核态的上下文切换」和「内存拷贝」的次数</strong>。</p>
+<ul>
+<li><p>零拷贝</p>
+<ul>
+<li><p>mmap+write：<code>mmap()</code> 系统调用函数会直接把内核缓冲区里的数据<strong>映射</strong>到用户空间，这样，操作系统内核与用户空间就不需要再进行任何的数据拷贝操作。<strong>仍然有4次上下文切换</strong></p>
+<ul>
+<li>应用进程调用了 <code>mmap()</code> 后，DMA 会把磁盘的数据拷贝到内核的缓冲区里。接着，应用进程跟操作系统内核「共享」这个缓冲区；</li>
+<li>应用进程再调用 <code>write()</code>，操作系统直接将内核缓冲区的数据拷贝到 socket 缓冲区中，这一切都发生在内核态，由 CPU 来搬运数据；</li>
+<li>最后，把内核的 socket 缓冲区里的数据，拷贝到网卡的缓冲区里，这个过程是由 DMA 搬运的</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_41.png" alt="mmap+write"></p>
+</li>
+<li><p>sendfile：一次系统调用，2次上下文切换，3次数据拷贝</p>
+<ul>
+<li>如果网卡支持SG-DMA技术，可以缩减为2次数据拷贝</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_42.png" alt="sendfile"></p>
+</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_43.png" alt="SG-DMA"></p>
+<p>这就是所谓的<strong>零拷贝（*Zero-copy*）技术，因为我们没有在内存层面去拷贝数据，也就是说全程没有通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的。</strong>。</p>
+<p>零拷贝技术的文件传输方式相比传统文件传输的方式，减少了 2 次上下文切换和数据拷贝次数，<strong>只需要 2 次上下文切换和数据拷贝次数，就可以完成文件的传输，而且 2 次的数据拷贝过程，都不需要通过 CPU，2 次都是由 DMA 来搬运。</strong></p>
+<p>所以，总体来看，<strong>零拷贝技术可以把文件传输的性能提高至少一倍以上</strong>。</p>
+</li>
+</ul>
+<h2 id="Select-x2F-poll-x2F-epoll"><a href="#Select-x2F-poll-x2F-epoll" class="headerlink" title="Select&#x2F;poll&#x2F;epoll"></a>Select&#x2F;poll&#x2F;epoll</h2><ul>
+<li>select：注册事件数量有限制<ul>
+<li>从用户空间拷贝fd_set（注册的事件集合）到内核空间</li>
+<li>遍历所有fd文件，并将当前进程挂到每个fd的等待队列中，当某个fd文件设备收到消息后，会唤醒设备等待队列上睡眠的进程，那么当前进程就会被唤醒</li>
+<li>如果遍历完所有的fd没有I&#x2F;O事件，则当前进程进入睡眠，当有某个fd文件有I&#x2F;O事件或当前进程睡眠超时后，当前进程重新唤醒再次遍历所有fd文件</li>
+</ul>
+</li>
+<li>poll：和select类似，但使用链表存储注册事件，数量无限制</li>
+<li>epoll：采用的是事件驱动机制，每个fd上有注册有回调函数，当网卡接收到数据时会回调该函数，同时将该fd的引用放入<strong>rdlist就绪列表</strong>中。调用<strong>epoll_wait</strong>检查是否有事件发生时，只需要检查eventpoll对象中的rdlist双链表中是否有epitem元素即可。如果rdlist不为空，则把发生的事件复制到用户态，同时将事件数量返回给用户。</li>
+</ul>
+
       
     </div>
 
@@ -725,9 +873,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-11 10:09:39 / Modified: 12:16:07" itemprop="dateCreated datePublished" datetime="2023-04-11T10:09:39+08:00">2023-04-11</time>
+      <time title="Created: 2023-04-11 10:09:39" itemprop="dateCreated datePublished" datetime="2023-04-11T10:09:39+08:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-12 15:38:40" itemprop="dateModified" datetime="2023-04-12T15:38:40+08:00">2023-04-12</time>
     </span>
 
   
@@ -740,10 +894,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="C-三大特性"><a href="#C-三大特性" class="headerlink" title="C++三大特性"></a>C++三大特性</h1><h2 id="封装："><a href="#封装：" class="headerlink" title="封装："></a>封装：</h2><p>封装，也就是把客观事物封装成抽象的类，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏，例如：将公共的数据或方法使用public修饰，而不希望被访问的数据或方法采用private修饰。<br>封装是面向对象编程中的把数据和操作数据的函数绑定在一起的一个概念，这样能避免受到外界的干扰和误用，从而确保了安全。把数据和处理数据的操作结合形成类，数据和函数都是类的成员。</p>
-<h3 id="意义："><a href="#意义：" class="headerlink" title="意义："></a>意义：</h3><p>封装的目的是增强安全性和简化编程，使用者不必了解具体的实现细节，而只是通过外部接口以及特定的访问权限来使用类的成员。<br>使得代码模块化，提高程序的可读性。</p>
-<h2 id="继承："><a href="#继承：" class="headerlink" title="继承："></a>继承：</h2><p>让某种类型对象获得另一个类型对象的属性和方法。它可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。继承的过程，就是从一般到特殊的过程。继承所表达的是类之间相关的关系，这种关系使得对象可以继承另外一类对象的特征和能力。</p>
-<h3 id="意义：-1"><a href="#意义：-1" class="headerlink" title="意义："></a>意义：</h3><p>继承可以扩展已存在的代码模块（类），目的是避免公用代码的重复开发，减少代码和数据冗余。<br>继承是在封装的基础上进行的（个人理解），提高了代码的重用性，使得修改或扩展继承而来的实现都较为容易。将⼈定义为⼀个抽象类，拥有姓名、性别、年龄等公共属性，吃饭、睡觉等公共⽅法，在定义⼀个具体的⼈时，就可以继承这个抽象类，既保留了公共属性和⽅法，也可以在此基础上扩展跳舞、唱歌等特有⽅法。</p>
+          <h2 id="C-三大特性"><a href="#C-三大特性" class="headerlink" title="C++三大特性"></a>C++三大特性</h2><h3 id="封装："><a href="#封装：" class="headerlink" title="封装："></a>封装：</h3><p>封装，也就是把客观事物封装成抽象的类，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏，例如：将公共的数据或方法使用public修饰，而不希望被访问的数据或方法采用private修饰。<br>封装是面向对象编程中的把数据和操作数据的函数绑定在一起的一个概念，这样能避免受到外界的干扰和误用，从而确保了安全。把数据和处理数据的操作结合形成类，数据和函数都是类的成员。</p>
+<p>意义：</p>
+<p>封装的目的是增强安全性和简化编程，使用者不必了解具体的实现细节，而只是通过外部接口以及特定的访问权限来使用类的成员。<br>使得代码模块化，提高程序的可读性。</p>
+<h3 id="继承："><a href="#继承：" class="headerlink" title="继承："></a>继承：</h3><p>让某种类型对象获得另一个类型对象的属性和方法。它可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。继承的过程，就是从一般到特殊的过程。继承所表达的是类之间相关的关系，这种关系使得对象可以继承另外一类对象的特征和能力。</p>
+<p>意义：</p>
+<p>继承可以扩展已存在的代码模块（类），目的是避免公用代码的重复开发，减少代码和数据冗余。<br>继承是在封装的基础上进行的（个人理解），提高了代码的重用性，使得修改或扩展继承而来的实现都较为容易。将⼈定义为⼀个抽象类，拥有姓名、性别、年龄等公共属性，吃饭、睡觉等公共⽅法，在定义⼀个具体的⼈时，就可以继承这个抽象类，既保留了公共属性和⽅法，也可以在此基础上扩展跳舞、唱歌等特有⽅法。</p>
 <h3 id="public、protected、private-指定继承方式"><a href="#public、protected、private-指定继承方式" class="headerlink" title="public、protected、private 指定继承方式"></a>public、protected、private 指定继承方式</h3><p>不同的继承方式会影响基类成员在派生类中的访问权限。</p>
 <ol>
 <li><p>public继承方式<br>基类中所有 public 成员在派生类中为 public 属性；<br>基类中所有 protected 成员在派生类中为 protected 属性；<br>基类中所有 private 成员在派生类中不能使用。</p>
@@ -769,12 +925,13 @@
 <p>注意，我们这里说的是基类的 private 成员不能在派生类中使用，并没有说基类的 private 成员不能被继承。<strong>实际上，基类的 private 成员是能够被继承的，并且（成员变量）会占用派生类对象的内存，它只是在派生类中不可见，导致无法使用罢了。private 成员的这种特性，能够很好的对派生类隐藏基类的实现，以体现面向对象的封装性。</strong></p>
 <p>下表汇总了不同继承方式对不同属性的成员的影响结果</p>
 <p>继承方式&#x2F;基类成员	public成员	protected成员	private成员<br>public继承					public	        protected	         不可见<br>protected继承			 protected	  protected	         不可见<br>private继承				  private	       private	              不可见</p>
-<h2 id="多态："><a href="#多态：" class="headerlink" title="多态："></a>多态：</h2><p>个人理解 ：多态是在继承的基础上进行的<br>同⼀事物表现出不同事物的能⼒，即向不同对象发送同⼀消息，不同的对象在接收时会产⽣ 不同的⾏为（重载实现编译时多态，虚函数实现运⾏时多态）</p>
+<h3 id="多态："><a href="#多态：" class="headerlink" title="多态："></a>多态：</h3><p>个人理解 ：多态是在继承的基础上进行的<br>同⼀事物表现出不同事物的能⼒，即向不同对象发送同⼀消息，不同的对象在接收时会产⽣ 不同的⾏为（重载实现编译时多态，虚函数实现运⾏时多态）</p>
 <p>多态性是允许你将父对象设置成为和一个或更多的他的子对象相等的技术，赋值之后，父对象就可以根据当前赋值给它的子对象的特性以不同的方式运作。<strong>简单一句话：允许将子类类型的指针赋值给父类类型的指针</strong></p>
 <p>实现多态有二种方式：重写（override），重载（overload）。</p>
 <p>重写：是指子类重新定义父类的虚函数的做法。</p>
 <p>重载：是指允许存在多个同名函数，而这些函数的参数表不同（或许参数个数不同，或许参数类型不同，或许两者都不同）。例如：基类是一个抽象对象——人，那教师、运动员也是人，而使用这个抽象对象既可以表示教师、也可以表示运动员。</p>
-<h3 id="C-中的重载、重写（覆盖）和隐藏的区别"><a href="#C-中的重载、重写（覆盖）和隐藏的区别" class="headerlink" title="C++中的重载、重写（覆盖）和隐藏的区别"></a>C++中的重载、重写（覆盖）和隐藏的区别</h3><p>（1）重载（overload）</p>
+<p><strong>C++中的重载、重写（覆盖）和隐藏的区别</strong></p>
+<p>（1）重载（overload）</p>
 <p>重载是指在同一范围定义中的同名成员函数才存在重载关系。主要特点是函数名相同，参数类型和数目有所不同，不能出现参数个数和类型均相同，仅仅依靠返回值不同来区分的函数。重载和函数成员是否是虚函数无关。举个例子：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">int</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">double</span>, <span class="type">double</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">fun</span><span class="params">(<span class="type">char</span>)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -794,7 +951,8 @@
 <li>重写要求参数列表相同，返回值类型相同，<strong>重写函数体</strong>；重载则要求函数名相同，<strong>参数类型和数目有所不同</strong>，不能出现参数个数和类型均相同，仅仅依靠返回值不同来区分的函数。</li>
 <li>重写关系中，调用方法根据对象类型决定；重载根据调用时实参表与形参表的对应关系来选择函数体</li>
 </ul>
-<h3 id="意义：-2"><a href="#意义：-2" class="headerlink" title="意义："></a>意义：</h3><p>接口重用</p>
+<p><strong>意义：</strong></p>
+<p>接口重用</p>
 <h3 id="C-的多态如何实现"><a href="#C-的多态如何实现" class="headerlink" title="C++的多态如何实现"></a>C++的多态如何实现</h3><p>C++的多态性，<strong>一言以蔽之</strong>就是：</p>
 <p>在基类的函数前加上<strong>virtual</strong>关键字，在派生类中重写该函数，运行时将会根据所指对象的实际类型来调用相应的函数，如果对象类型是派生类，就调用派生类的函数，如果对象类型是基类，就调用基类的函数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot; Base::func()&quot;</span> &lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Son1</span> : <span class="keyword">public</span> Base&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">()</span> <span class="keyword">override</span></span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot; Son1::func()&quot;</span> &lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Son2</span> : <span class="keyword">public</span> Base&#123;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Base* base = <span class="keyword">new</span> Son1;</span><br><span class="line">	base-&gt;<span class="built_in">fun</span>();</span><br><span class="line">	base = <span class="keyword">new</span> Son2;</span><br><span class="line">	base-&gt;<span class="built_in">fun</span>();</span><br><span class="line">	<span class="keyword">delete</span> base;</span><br><span class="line">	base = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 运行结果</span></span><br><span class="line"><span class="comment">// Son1::func()</span></span><br><span class="line"><span class="comment">// Base::func()</span></span><br></pre></td></tr></table></figure>
@@ -820,6 +978,35 @@
 
 <p>将基类的析构函数声明为虚函数：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Parent</span>()&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Parent construct function&quot;</span>  &lt;&lt; endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">Parent</span>()&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Parent destructor function&quot;</span> &lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Son</span> : <span class="keyword">public</span> Parent&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Son</span>()&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Son construct function&quot;</span>  &lt;&lt; endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	~<span class="built_in">Son</span>()&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Son destructor function&quot;</span> &lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Parent* p = <span class="keyword">new</span> <span class="built_in">Son</span>();</span><br><span class="line">	<span class="keyword">delete</span> p;</span><br><span class="line">	p = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果：</span></span><br><span class="line"><span class="comment">//Parent construct function</span></span><br><span class="line"><span class="comment">//Son construct function</span></span><br><span class="line"><span class="comment">//Son destructor function</span></span><br><span class="line"><span class="comment">//Parent destructor function</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="C-从代码到可执行程序经历了什么？"><a href="#C-从代码到可执行程序经历了什么？" class="headerlink" title="C++从代码到可执行程序经历了什么？"></a>C++从代码到可执行程序经历了什么？</h2><h3 id="（1）预处理"><a href="#（1）预处理" class="headerlink" title="（1）预处理"></a>（1）预处理</h3><p>主要处理源代码文件中的以“#”开头的预编译指令。处理规则见下：</p>
+<ol>
+<li>删除所有的#define，展开所有的宏定义。</li>
+<li>处理所有的条件预编译指令，如“#if”、“#endif”、“#ifdef”、“#elif”和“#else”。</li>
+<li>处理“#include”预编译指令，将文件内容替换到它的位置，这个过程是递归进行的，文件中包含其他 文件。</li>
+<li>删除所有的注释，“&#x2F;&#x2F;”和“&#x2F;**&#x2F;”。</li>
+<li>保留所有的#pragma 编译器指令，编译器需要用到他们，如：#pragma once 是为了防止有文件被重 复引用。</li>
+<li>添加行号和文件标识，便于编译时编译器产生调试用的行号信息，和编译时产生编译错误或警告是 能够显示行号。</li>
+</ol>
+<h3 id="（2）编译"><a href="#（2）编译" class="headerlink" title="（2）编译"></a>（2）编译</h3><p>把预编译之后生成的xxx.i或xxx.ii文件，进行一系列词法分析、语法分析、语义分析及优化后，生成相应 的汇编代码文件。</p>
+<ol>
+<li>词法分析：利用类似于“有限状态机”的算法，将源代码程序输入到扫描机中，将其中的字符序列分 割成一系列的记号。</li>
+<li>语法分析：语法分析器对由扫描器产生的记号，进行语法分析，产生语法树。由语法分析器输出的 语法树是一种以表达式为节点的树。</li>
+<li>语义分析：语法分析器只是完成了对表达式语法层面的分析，语义分析器则对表达式是否有意义进 行判断，其分析的语义是静态语义——在编译期能分期的语义，相对应的动态语义是在运行期才能确定 的语义。</li>
+<li>优化：源代码级别的一个优化过程。</li>
+<li>目标代码生成：由代码生成器将中间代码转换成目标机器代码，生成一系列的代码序列——汇编语言 表示。</li>
+<li>目标代码优化：目标代码优化器对上述的目标机器代码进行优化：寻找合适的寻址方式、使用位移 来替代乘法运算、删除多余的指令等。</li>
+</ol>
+<h3 id="（3）汇编"><a href="#（3）汇编" class="headerlink" title="（3）汇编"></a>（3）汇编</h3><p>将汇编代码转变成机器可以执行的指令(机器码文件)。 汇编器的汇编过程相对于编译器来说更简单，没 有复杂的语法，也没有语义，更不需要做指令优化，只是根据汇编指令和机器指令的对照表一一翻译过 来，汇编过程有汇编器as完成。经汇编之后，产生目标文件(与可执行文件格式几乎一样)xxx.o(Linux 下)、xxx.obj(Window下)。</p>
+<h3 id="（4）链接"><a href="#（4）链接" class="headerlink" title="（4）链接"></a>（4）链接</h3><p>将不同的源文件产生的目标文件进行链接，从而形成一个可以执行的程序。链接分为静态链接和动态链 接：</p>
+<h3 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h3><p>函数和数据被编译进一个二进制文件。在使用静态库的情况下，在编译链接可执行文件时，链接器从库 中复制这些函数和数据并把它们和应用程序的其它模块组合起来创建最终的可执行文件。</p>
+<p>空间浪费：因为每个可执行程序中对所有需要的目标文件都要有一份副本，所以如果多个程序对同一个 目标文件都有依赖，会出现同一个目标文件都在内存存在多个副本；</p>
+<p>更新困难：每当库函数的代码修改了，这个时候就需要重新进行编译链接形成可执行程序。</p>
+<p>运行速度快：但是静态链接的优点就是，在可执行程序中已经具备了所有执行程序所需要的任何东西， 在执行的时候运行速度快。</p>
+<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p>动态链接的基本思想是把程序按照模块拆分成各个相对独立部分，在程序运行时才将它们链接在一起形 成一个完整的程序，而不是像静态链接一样把所有程序模块都链接成一个单独的可执行文件。</p>
+<p>共享库：就是即使需要每个程序都依赖同一个库，但是该库不会像静态链接那样在内存中存在多分，副 本，而是这多个程序在执行时共享同一份副本；</p>
+<p>更新方便：更新时只需要替换原来的目标文件，而无需将所有的程序再重新链接一遍。当程序下一次运 行时，新版本的目标文件会被自动加载到内存并且链接起来，程序就完成了升级的目标。</p>
+<p>性能损耗：因为把链接推迟到了程序运行时，所以每次执行程序都需要进行链接，所以性能会有一定损 失。</p>
 
       
     </div>
