@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="LeetCode75：数组和字符串2023&#x2F;4&#x2F;18 交替合并字符串：简单给你两个字符串 word1 和 word2 。请你从 word1 开始，通过交替添加字母来合并字符串。如果一个字符串比另一个字符串长，就将多出来的字母追加到合并后字符串的末尾。 返回 合并后的字符串 。 示例 1： 123456输入：word1 &#x3D; &quot;abc&quot;, word2 &#x3D; &amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode刷题记录">
+<meta property="og:url" content="http://example.com/2023/04/18/LeetCode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Ai吃橘子">
+<meta property="og:description" content="LeetCode75：数组和字符串2023&#x2F;4&#x2F;18 交替合并字符串：简单给你两个字符串 word1 和 word2 。请你从 word1 开始，通过交替添加字母来合并字符串。如果一个字符串比另一个字符串长，就将多出来的字母追加到合并后字符串的末尾。 返回 合并后的字符串 。 示例 1： 123456输入：word1 &#x3D; &quot;abc&quot;, word2 &#x3D; &amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-18T06:43:41.000Z">
+<meta property="article:modified_time" content="2023-04-18T12:17:08.922Z">
+<meta property="article:tag" content="学习记录">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/04/18/LeetCode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/18/LeetCode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/","path":"2023/04/18/LeetCode刷题记录/","title":"LeetCode刷题记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LeetCode刷题记录 | Ai吃橘子</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ai吃橘子</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">雄关漫道真如铁，而今迈步从头越</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LeetCode75%EF%BC%9A%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.</span> <span class="nav-text">LeetCode75：数组和字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%9B%BF%E5%90%88%E5%B9%B6%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%9A%E7%AE%80%E5%8D%95"><span class="nav-number">1.1.</span> <span class="nav-text">交替合并字符串：简单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%85%AC%E5%9B%A0%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">字符串的最大公因子</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">学习记录</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/LeetCode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ai吃橘子">
+      <meta itemprop="description" content="学习记录">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LeetCode刷题记录 | Ai吃橘子">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LeetCode刷题记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-18 14:43:41 / Modified: 20:17:08" itemprop="dateCreated datePublished" datetime="2023-04-18T14:43:41+08:00">2023-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="LeetCode75：数组和字符串"><a href="#LeetCode75：数组和字符串" class="headerlink" title="LeetCode75：数组和字符串"></a>LeetCode75：数组和字符串</h1><p><strong>2023&#x2F;4&#x2F;18</strong></p>
+<h2 id="交替合并字符串：简单"><a href="#交替合并字符串：简单" class="headerlink" title="交替合并字符串：简单"></a>交替合并字符串：简单</h2><p>给你两个字符串 <code>word1</code> 和 <code>word2</code> 。请你从 <code>word1</code> 开始，通过交替添加字母来合并字符串。如果一个字符串比另一个字符串长，就将多出来的字母追加到合并后字符串的末尾。</p>
+<p>返回 <strong>合并后的字符串</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = &quot;abc&quot;, word2 = &quot;pqr&quot;</span><br><span class="line">输出：&quot;apbqcr&quot;</span><br><span class="line">解释：字符串合并情况如下所示：</span><br><span class="line">word1：  a   b   c</span><br><span class="line">word2：    p   q   r</span><br><span class="line">合并后：  a p b q c r</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = &quot;ab&quot;, word2 = &quot;pqrs&quot;</span><br><span class="line">输出：&quot;apbqrs&quot;</span><br><span class="line">解释：注意，word2 比 word1 长，&quot;rs&quot; 需要追加到合并后字符串的末尾。</span><br><span class="line">word1：  a   b </span><br><span class="line">word2：    p   q   r   s</span><br><span class="line">合并后：  a p b q   r   s</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = &quot;abcd&quot;, word2 = &quot;pq&quot;</span><br><span class="line">输出：&quot;apbqcd&quot;</span><br><span class="line">解释：注意，word1 比 word2 长，&quot;cd&quot; 需要追加到合并后字符串的末尾。</span><br><span class="line">word1：  a   b   c   d</span><br><span class="line">word2：    p   q </span><br><span class="line">合并后：  a p b q c   d</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= word1.length, word2.length &lt;= 100</code></li>
+<li><code>word1</code> 和 <code>word2</code> 由小写英文字母组成</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这道题目比较基础，但是在大多数两个字符串出现需要共同判断时while( &amp;&amp; )还是挺好用的</span></span><br><span class="line"><span class="comment">//这道题目可以双指针，也可以单指针，都不麻烦，注意substr(pos,len)函数的用法,如果只给了pos那么默认切片至数据的结尾</span></span><br><span class="line"><span class="comment">//如果是ACM核心代码模式，需要加入 #include &lt;string&gt;</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">mergeAlternately</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> l1 = word1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> l2 = word2.<span class="built_in">size</span>();</span><br><span class="line">        string res;</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;l1 &amp;&amp; i&lt;l2)</span><br><span class="line">        &#123;</span><br><span class="line">            res += word1[i];</span><br><span class="line">            res += word2[i];</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(i&lt;l1) res += word1.<span class="built_in">substr</span>(i);</span><br><span class="line">        <span class="keyword">if</span>(i&lt;l2) res += word2.<span class="built_in">substr</span>(i);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串的最大公因子"><a href="#字符串的最大公因子" class="headerlink" title="字符串的最大公因子"></a>字符串的最大公因子</h2><p>对于字符串 <code>s</code> 和 <code>t</code>，只有在 <code>s = t + ... + t</code>（<code>t</code> 自身连接 1 次或多次）时，我们才认定 “<code>t</code> 能除尽 <code>s</code>”。</p>
+<p>给定两个字符串 <code>str1</code> 和 <code>str2</code> 。返回 <em>最长字符串 <code>x</code>，要求满足 <code>x</code> 能除尽 <code>str1</code> 且 <code>X</code> 能除尽 <code>str2</code></em> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：str1 = &quot;ABCABC&quot;, str2 = &quot;ABC&quot;</span><br><span class="line">输出：&quot;ABC&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：str1 = &quot;ABABAB&quot;, str2 = &quot;ABAB&quot;</span><br><span class="line">输出：&quot;AB&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：str1 = &quot;LEET&quot;, str2 = &quot;CODE&quot;</span><br><span class="line">输出：&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= str1.length, str2.length &lt;= 1000</code></li>
+<li><code>str1</code> 和 <code>str2</code> 由大写英文字母组成</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">gcdOfStrings</span><span class="params">(string str1, string str2)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//用枚举法来做，最大公因子一定是最短的字符串里面从前开始的子串</span></span><br><span class="line">        <span class="type">int</span> len1 = str1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> len2 = str2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="built_in">min</span>(len1,len2);i&gt;<span class="number">0</span>;i--)<span class="comment">//从大到小，这样就能保证返回的是最长子串</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(len1%i==<span class="number">0</span> &amp;&amp; len2%i==<span class="number">0</span>)<span class="comment">//首先长度就要保证能够整除</span></span><br><span class="line">            &#123;</span><br><span class="line">                string X = str1.<span class="built_in">substr</span>(<span class="number">0</span>,i);<span class="comment">//这个无所谓从哪个字符串里面截取</span></span><br><span class="line">                <span class="keyword">if</span>(<span class="built_in">check</span>(X,str1)&amp;&amp;<span class="built_in">check</span>(X,str2))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">return</span> X;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>; </span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(<span class="type">const</span> string&amp; X,<span class="type">const</span> string&amp; s)</span><span class="comment">//检查一个字符串能不能被另一个字符串整除的函数</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = (<span class="type">int</span>) s.<span class="built_in">size</span>()/(<span class="type">int</span>) X.<span class="built_in">size</span>();</span><br><span class="line">        string str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            str += X;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.<span class="built_in">compare</span>(str)==<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//这道题目不用KMP算法也能做，KMP算法是找是否有相同的字符串，用来“寻找”多一些。</span></span><br><span class="line"><span class="comment">//KMP算法更多的是关注子串，在这道题目中，有可能字符串本身就是公因子，这种情况下，KMP算法反而效果不好</span></span><br><span class="line"><span class="comment">//next数组里面装的是数值就是当前字符串内存在的最长相等先后缀长度（或者长度-1），这个是子串！！！不是字符串本身</span></span><br><span class="line"><span class="comment">//这道题目和代码随想录里面：重复的子字符串 可以对照来看，KMP是找最小的重复子串，枚举既可以找最大的子串也可以找最小的子串！</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag"># 学习记录</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/17/MySQL/" rel="prev" title="MySQL">
+                  <i class="fa fa-chevron-left"></i> MySQL
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
