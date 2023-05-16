@@ -489,7 +489,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-25 20:05:41" itemprop="dateModified" datetime="2023-04-25T20:05:41+08:00">2023-04-25</time>
+      <time title="Modified: 2023-05-15 11:10:18" itemprop="dateModified" datetime="2023-05-15T11:10:18+08:00">2023-05-15</time>
     </span>
 
   
@@ -502,11 +502,604 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="博主正在学习过程中……学完后会对内容进行整理总结"><a href="#博主正在学习过程中……学完后会对内容进行整理总结" class="headerlink" title="博主正在学习过程中……学完后会对内容进行整理总结"></a>博主正在学习过程中……学完后会对内容进行整理总结</h2><p>2023&#x2F;4&#x2F;19今天看完了MySQL必知必会 前十一章 主要是基础语法，select 语句的用法 ，一些子句 </p>
-<p>比如 where  like+通配符  或者 regexp ‘ ‘  前导符号&#39;\ \   ，[]是或的用法  not是非      </p>
-<p>order by （）DESC在每个后面都要加 加了就是降序排列 </p>
-<p>limit 限制行数 </p>
-<p>2023&#x2F;4&#x2F;25 今天看完了第二十章</p>
+          <h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><h4 id="三大范式"><a href="#三大范式" class="headerlink" title="三大范式"></a>三大范式</h4><ul>
+<li>1NF：数据库每个字段都不能再分为多个字段（最基本要求），例如<strong>班级字段可分为专业和班号</strong>，<strong>解决方法拆字段</strong></li>
+<li>2NF：满足1NF的情况下，在<strong>存在主键时，不能有部分依赖</strong>。(主要<strong>针对复合主键</strong>的)。例如订单号和商品号作为复合主键，商品信息只依赖商品号，<strong>解决方法是拆表</strong></li>
+<li>3NF：满足1NF,2NF，确保数据库每个字段都和主键直接相关，而不是间接相关，例如学号为主键，课程号和学号并不是直接相关，<strong>解决方法是拆表</strong></li>
+</ul>
+<h4 id="drop、delete、和truncate区别？"><a href="#drop、delete、和truncate区别？" class="headerlink" title="drop、delete、和truncate区别？"></a>drop、delete、和truncate区别？</h4><ul>
+<li>用法不同<ul>
+<li>drop：删除整个表，包括表结构</li>
+<li>truncate：清空整个表，保留表结构</li>
+<li>delete：删除表中的某一列数据，不加条件，清空整个表，保留表结构</li>
+</ul>
+</li>
+<li>属于不同的数据库语言<ul>
+<li>truncate和drop属于DDL语言，原数据不会放入rollback segment中，无法回滚</li>
+<li>delete是DML语言，会将原数据放入rollback segment中，可以回滚</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>delete</code>命令执行的时候会产生数据库的<code>binlog</code>日志，而日志记录是需要消耗时间的，但是也有个好处方便数据回滚恢复。</p>
+<p><code>truncate</code>命令执行的时候不会产生数据库日志，因此比<code>delete</code>要快。除此之外，还会把表的自增值重置和索引恢复到初始大小等。</p>
+<p><code>drop</code>命令会把表占用的空间全部释放掉。</p>
+</blockquote>
+<h4 id="设计数据集步骤"><a href="#设计数据集步骤" class="headerlink" title="设计数据集步骤"></a>设计数据集步骤</h4><ul>
+<li><strong>需求分析</strong> : 分析用户的需求，包括数据、功能和性能需求。</li>
+<li><strong>概念结构设计</strong> : 主要采用 E-R 模型进行设计，包括画 E-R 图。</li>
+<li><strong>逻辑结构设计</strong> : 通过将 E-R 图转换成表，实现从 E-R 模型到关系模型的转换。</li>
+<li><strong>物理结构设计</strong> : 主要是为所设计的数据库选择合适的存储结构和存取路径。</li>
+<li><strong>数据库实施</strong> : 包括编程、测试和试运行</li>
+<li><strong>数据库的运行和维护</strong> : 系统的运行与数据库的日常维护</li>
+</ul>
+<h4 id="MyISAM和InnoDB区别"><a href="#MyISAM和InnoDB区别" class="headerlink" title="MyISAM和InnoDB区别"></a>MyISAM和InnoDB区别</h4><ul>
+<li><strong>锁</strong>：MyISAM只有表级锁；InnoDB支持表级锁和行级锁</li>
+<li><strong>事务</strong>：MyISAM不支持事务；InnoDB支持事务，可以提交和回滚</li>
+<li><strong>外键</strong>：MyISAM不支持外键；InnoDB支持外键</li>
+<li><strong>安全恢复</strong>：MyISAM不支持异常崩溃后的安全回复；InnoDB支持，恢复的过程依赖于 <code>redo log</code></li>
+<li><strong>索引结构</strong>：MyISAM索引使用B+树，叶子节点存放的是数据记录的地址，索引文件和数据文件是分开的；InnoDB索引使用B+树，叶子节点存放的是完整的数据记录，非聚簇索引存放的是主键的值</li>
+</ul>
+<h4 id="事务ACID特性"><a href="#事务ACID特性" class="headerlink" title="事务ACID特性"></a>事务ACID特性</h4><ul>
+<li><p><strong>原子性</strong>（<code>Atomicity</code>） ： 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用</p>
+</li>
+<li><p><strong>一致性</strong>（<code>Consistency</code>）： 执行事务前后，数据保持一致，例如转账业务中，无论事务是否成功，转账者和收款人的总额应该是不变的</p>
+</li>
+<li><p><strong>隔离性</strong>（<code>Isolation</code>）： 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的</p>
+</li>
+<li><p><strong>持久性</strong>（<code>Durability</code>）： 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响</p>
+<blockquote>
+<p>实现原理：</p>
+<p>MySQL InnoDB 引擎使用 <strong>redo log(重做日志)</strong> 保证事务的<strong>持久性</strong>，使用 <strong>undo log(回滚日志)</strong> 来保证事务的<strong>原子性</strong>。</p>
+<p>MySQL InnoDB 引擎通过 <strong>锁机制</strong>、<strong>MVCC</strong> 等手段来保证事务的隔离性（ 默认支持的隔离级别是 <strong><code>REPEATABLE-READ</code></strong> ）。</p>
+<p>保证了事务的持久性、原子性、隔离性之后，一致性才能得到保障。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h4><ul>
+<li><p>脏读</p>
+<p>：一个事务读取了另一个事务未提交的数据</p>
+<ul>
+<li>添加写锁</li>
+</ul>
+</li>
+<li><p><strong>丢失修改</strong>：两个事务同时操作同一个数据，同时读取了数据，修改之后提交，可能有一个事务的修改操作没有生效</p>
+</li>
+<li><p>不可重复读</p>
+<p>：在同一个事务内，多次读取同一个数据，由于其他事务对数据的修改，多次读取的数据不同</p>
+<ul>
+<li>给查询范围内的数据加读锁并且读取之后不会马上释放</li>
+<li>其他事务无法施加写锁，无法修改数据；但是可以插入数据，导致幻读</li>
+</ul>
+</li>
+<li><p>幻读</p>
+<p>：在同一个事务内，查询同一个表中的数据，由于其他事务添加或删除数据，发现多次查询总的数据量不同</p>
+<ul>
+<li>间隙锁加行锁</li>
+</ul>
+</li>
+</ul>
+<h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><ul>
+<li><p><strong>READ-UNCOMMITTED(读取未提交)：</strong> 最低的隔离级别，允许读取尚未提交的数据变更</p>
+</li>
+<li><p><strong>READ-COMMITTED(读取已提交)：</strong> 允许读取并发事务已经提交的数据</p>
+</li>
+<li><p><strong>REPEATABLE-READ(可重复读)：</strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>MySQL默认隔离级别</strong></p>
+</li>
+<li><p><strong>SERIALIZABLE(可串行化)：</strong> 最高的隔离级别，完全服从 ACID 的隔离级别。所有的事务依次逐个执行</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_19.png" alt="事务隔离"></p>
+</li>
+</ul>
+<h4 id="join的使用和原理"><a href="#join的使用和原理" class="headerlink" title="join的使用和原理"></a>join的使用和原理</h4><ul>
+<li><p><code>left join</code>：保留左表的数据，左表没有的数据设置为null，外连接</p>
+</li>
+<li><p><code>right join</code>：保留右表的数据，右表没有的数据设置为null，外连接</p>
+</li>
+<li><p><code>join(inner join)</code>：取左右表数据的交集，内连接</p>
+</li>
+<li><p>原理：嵌套循环（Nested-Loop Join），需要区分驱动表和被驱动表，先访问驱动表，筛选出结果集</p>
+<ul>
+<li><p>SNLJ（Simple Nested-Loop Join）：简单嵌套循环，将驱动表中的数据一行一行读取出来进行匹配，每行数据都会出发被驱动表的整表扫描，对比数据，将结果加入结果集，不需要回表</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_25.png" alt="SNLJ"></p>
+</li>
+<li><p>INLJ（Index Nested-Loop join）：索引嵌套循环。和SNLJ类似，最大的区别是用来join的字段在被驱动表中建立了索引，<strong>如果是非聚簇索引需要进行回表，聚簇索引不需要回表</strong></p>
+<ul>
+<li>SNLJ算法被驱动表需要每次全表查询，INLJ算法使用索引查询，性能提高</li>
+</ul>
+</li>
+<li><p>BNLJ（Block Nested-Loop Join）：块嵌套循环，没有索引的情况下一种优化，降低被驱动表的扫描次数，使用join buffer缓冲区</p>
+<ul>
+<li>join bufffer缓存join所需的字段，在与被驱动表进行对比时，将buffer中的所有字段和被驱动表一起对比，如果buffer足够大，只需要对被驱动表查询一次</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_26.png" alt="BNLJ"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="SQL语句执行流程"><a href="#SQL语句执行流程" class="headerlink" title="SQL语句执行流程"></a>SQL语句执行流程</h4><p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_29.png" alt="执行流程"></p>
+<h4 id="datetime和timestamp区别"><a href="#datetime和timestamp区别" class="headerlink" title="datetime和timestamp区别"></a>datetime和timestamp区别</h4><ul>
+<li>共同点：存储精度都精确到秒</li>
+<li>区别：<ul>
+<li>datetime日期范围1001——9999年，timestamp范围为1970——2038年</li>
+<li>datetime存储时间与时区无关，timestamp和时区相关</li>
+<li>datetime占8个字节，timestamp占4字节</li>
+<li>datetime默认值为null,timestamp默认为当前时间</li>
+</ul>
+</li>
+</ul>
+<h4 id="varchar和char区别"><a href="#varchar和char区别" class="headerlink" title="varchar和char区别"></a>varchar和char区别</h4><ul>
+<li>char定长，varchar是变长的，用一个字符表示占用长度</li>
+<li>检索效率char&gt;varchar，如果确认某个字段的值，使用char，例如MD5加密后的密码</li>
+</ul>
+<h4 id="in和exists区别"><a href="#in和exists区别" class="headerlink" title="in和exists区别"></a>in和exists区别</h4><ul>
+<li>in先执行子查询，后执行主查询，exists相反。通常<strong>in+小表，exists+大表</strong>，遵循小表驱动大表原则，减少数据库连接次数</li>
+</ul>
+<h3 id="高性能优化"><a href="#高性能优化" class="headerlink" title="高性能优化"></a>高性能优化</h3><h4 id="字段设计规范"><a href="#字段设计规范" class="headerlink" title="字段设计规范"></a>字段设计规范</h4><ul>
+<li><strong>优先选择符合存储需要的最小数据类型</strong>：建立索引的空间越小，一页中能够存储的索引节点数量也就越多，遍历时的IO次数就越少<ul>
+<li><strong>将字符串转换成数字类型存储,如:将 IP 地址转换成整形数据</strong></li>
+</ul>
+</li>
+<li><strong>避免使用 TEXT,BLOB 数据类型</strong>：可以将BLOB或是TEXT列分离到单独的扩展表中，查询时只取出必要的列<ul>
+<li>大数据类型不能适用内存临时表，必须使用磁盘临时表，MySQL要进行二次查询，很慢</li>
+</ul>
+</li>
+<li><strong>避免使用ENUM类型</strong>：修改ENUM值需要使用ALTER语句，排序效率很低</li>
+<li><strong>尽可能把所有列定义为NOT NULL</strong>：索引NULL列需要额外的空间，会占用更多的空间，进行计算和比较时，也需要特殊处理</li>
+<li><strong>使用TIMESTAMP（4字节）或DATETIME（8字节）存储时间</strong>：不要使用字符串存储日期</li>
+<li><strong>财务类相关金额数据必须使用decimal类型</strong>：精准浮点数</li>
+</ul>
+<h4 id="索引设计规范"><a href="#索引设计规范" class="headerlink" title="索引设计规范"></a>索引设计规范</h4><ul>
+<li><p><strong>建议单张表的索引不超过5个</strong>：索引在增加查询效率的同时，也会降低插入和更新的效率。MySQL在进行查询操作时，会对每一个可以使用的索引进行评估，选择最优的索引进行查询，索引太多会导致计划的时间变长，降低效率</p>
+</li>
+<li><p>每个Innodb都必须有主键</p>
+<p>：Innodb按照主键索引的顺序来组织表</p>
+<ul>
+<li>不使用更新频繁的列作为主键</li>
+<li>不要使用UUID,MD5,HASH字符串作为主键，无法保证数据的顺序增长</li>
+<li>主键建议使用自增ID值</li>
+</ul>
+</li>
+<li><p>设置为索引的列</p>
+<p>：</p>
+<ul>
+<li>出现在WHERE从句中的列</li>
+<li>包含在ORDER BY、GROUP BY、DISTINCT中的字段</li>
+<li>不要对符合前两个条件的每个列都建立索引，建立联合索引效果更好</li>
+<li>多表join的关联列</li>
+</ul>
+</li>
+<li><p>索引列的顺序</p>
+<p>：</p>
+<ul>
+<li>区分度最高的放在联合索引的最左侧</li>
+<li>字段小的索引放在联合索引的最左侧</li>
+<li>使用最频繁的列放在联合索引的最左侧</li>
+</ul>
+</li>
+<li><p>对于频繁的查询优先考虑使用覆盖索引</p>
+<p>：</p>
+<ul>
+<li><strong>避免 Innodb 表进行索引的二次查询:</strong> 对于 Innodb 来说，二级索引在叶子节点中所保存的是行的主键信息，如果是用二级索引查询数据的话，在查找到相应的键值后，还要通过主键进行二次查询才能获取我们真实所需要的数据。而在覆盖索引中，二级索引的键值中可以获取所有的数据，避免了对主键的二次查询 ，减少了 IO 操作，提升了查询效率。</li>
+<li><strong>可以把随机 IO 变成顺序 IO 加快查询效率:</strong> 由于覆盖索引是按键值的顺序存储的，对于 IO 密集型的范围查找来说，顺序获取比随机获取每一行的数据 IO 要少的多，因此利用覆盖索引在访问时也可以把磁盘的随机读取的 IO 转变成索引查找的顺序 IO</li>
+</ul>
+</li>
+</ul>
+<h4 id="超-100-万行的批量写-UPDATE-DELETE-INSERT-操作-要分批多次进行操作"><a href="#超-100-万行的批量写-UPDATE-DELETE-INSERT-操作-要分批多次进行操作" class="headerlink" title="超 100 万行的批量写 (UPDATE,DELETE,INSERT) 操作,要分批多次进行操作"></a>超 100 万行的批量写 (UPDATE,DELETE,INSERT) 操作,要分批多次进行操作</h4><ul>
+<li><p><strong>大批量操作可能会造成严重的主从延迟</strong></p>
+<p>主从环境中,大批量操作可能会造成严重的主从延迟，大批量的写操作一般都需要执行一定长的时间， 而只有当主库上执行完成后，才会在其他从库上执行，所以会造成主库与从库长时间的延迟情况</p>
+</li>
+<li><p><strong>binlog 日志为 row 格式时会产生大量的日志</strong>：大批量写操作会产生大量日志，特别是对于 row 格式二进制数据而言，由于在 row 格式中会记录每一行数据的修改，我们一次修改的数据越多，产生的日志量也就会越多，日志的传输和恢复所需要的时间也就越长，这也是造成主从延迟的一个原因</p>
+</li>
+<li><p><strong>避免产生大事务操作</strong>：大批量修改数据，一定是在一个事务中进行的，这就会造成表中大批量数据进行锁定，从而导致大量的阻塞，阻塞会对 MySQL 的性能产生非常大的影响。</p>
+</li>
+<li><p>特别是长时间的阻塞会占满所有数据库的可用连接，这会使生产环境中的其他应用无法连接到数据库，因此一定要注意大批量写操作要进行分批</p>
+</li>
+</ul>
+<h3 id="索引详解"><a href="#索引详解" class="headerlink" title="索引详解"></a>索引详解</h3><h4 id="索引优缺点"><a href="#索引优缺点" class="headerlink" title="索引优缺点"></a>索引优缺点</h4><ul>
+<li>优点：大大加快数据的检索速度；通过创建唯一性索引，可以保证数据库中每一行数据的唯一性</li>
+<li>缺点：<ul>
+<li>创建维护索引需要耗时，对数据进行增删改查也需要改变索引</li>
+<li>索引需要物理空间存储</li>
+<li>数据库数据量不大时，索引不一定有很好的效果</li>
+</ul>
+</li>
+</ul>
+<h4 id="索引底层数据结构？为什么不使用HashMap"><a href="#索引底层数据结构？为什么不使用HashMap" class="headerlink" title="索引底层数据结构？为什么不使用HashMap?"></a>索引底层数据结构？为什么不使用HashMap?</h4><ul>
+<li><p><code>不使用HashMap</code>：HashMap不支持顺序和范围查询，无法很快查找某个范围类的数据</p>
+</li>
+<li><p>使用B+树作为索引数据结构</p>
+<blockquote>
+<p>使用B树或B+树作为索引结构主要是为了减少磁盘IO的次数，降低二叉平衡查找树的高度，因此B树和B+树都为<strong>多路平衡查找树</strong></p>
+<ul>
+<li>一个m阶的B树具有如下几个特征：<ul>
+<li>根结点至少有两个子女</li>
+<li>每个中间节点都包含k-1个元素和k个孩子，其中 m&#x2F;2 &lt;&#x3D; k &lt;&#x3D; m</li>
+<li>每一个叶子节点都包含k-1个元素，其中 m&#x2F;2 &lt;&#x3D; k &lt;&#x3D; m</li>
+<li>所有的叶子结点都位于同一层</li>
+<li>每个节点中的元素从小到大排列，节点当中k-1个元素正好是k个孩子包含的元素的值域分划</li>
+<li>每个结点都有卫星数据</li>
+</ul>
+</li>
+<li>插入操作：判断当前结点key的个数是否小于等于m-1，如果满足，直接插入即可，如果不满足，将节点的中间的key将这个节点分为左右两部分，中间的节点放到父节点中即可</li>
+<li>一个m阶的B+树具有如下特征：<ul>
+<li>有k个子树的中间节点包含有k个元素，每个元素不保存数据，只用来索引，所有数据都保存在叶子节点（m&#x2F;2 &lt;&#x3D; k &lt;&#x3D;m）</li>
+<li>所有的叶子结点中包含了全部元素的信息，及指向含这些元素记录的指针，且叶子结点本身依关键字的大小自小而大顺序链接</li>
+<li>所有的中间节点元素都同时存在于子节点，在子节点元素中是最大（或最小）元素</li>
+<li>根节点的最大（或最小）元素也就是整个B+树中最大（或最小）的元素，要一直保持</li>
+<li>只有叶子节点有卫星数据</li>
+</ul>
+</li>
+<li>B+树的优势：<ul>
+<li>单一节点存储更多的元素，使得查询的IO次数更少</li>
+<li>所有查询都要查找到叶子节点，查询性能稳定</li>
+<li>所有叶子节点形成有序链表，便于范围查询</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>MyISAM中，B+树叶节点的data域中存放的是数据记录的地址，取出data域的值后，还需要根据相应的地址取出相应的数据记录，这被称为<code>非聚簇索引</code></p>
+</li>
+<li><p>InnoDB中，其数据本身就是索引文件，树的叶节点data域保存了完整的数据记录，这被称为<code>聚簇索引</code>，这个索引的key是数据表的主键，而其余的索引都是辅助索引。辅助索引的data域存的是主键的值。</p>
+<ul>
+<li>根据主索引查找时，可以直接取出查找的数据</li>
+<li>根据辅助索引查找时，首先查询到主键的值，再走主索引取出相应的值</li>
+</ul>
+</li>
+</ul>
+<h4 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h4><ul>
+<li><p><strong>主键索引</strong>：主键列使用的索引。InnoDB 的表中，当没有显示的指定表的主键时，InnoDB 会自动先检查表中是否有唯一索引且不允许存在null值的字段，如果有，则选择该字段为默认的主键，否则 InnoDB 将会自动创建一个 6Byte 的自增主键</p>
+</li>
+<li><p>二级索引（辅助索引）</p>
+<p>：</p>
+<ul>
+<li>唯一索引：唯一索引的属性列<strong>不能出现重复的数据</strong>，允许数据为NULL，一张表可以创建多个唯一索引。一般是为了数据的唯一性，而不是为了查询效率</li>
+<li>普通索引：为了快速查询数据，可以创建多个普通索引，允许数据重复和NULL</li>
+<li>前缀索引：只适用于字符串数据，对文本的前几个字符创建的索引，相比普通索引建立的数据更小，<strong>会导致覆盖索引优化失效</strong></li>
+<li>全文索引：为了检索大文本数据中的关键字信息</li>
+</ul>
+</li>
+</ul>
+<h4 id="唯一索引和普通索引"><a href="#唯一索引和普通索引" class="headerlink" title="唯一索引和普通索引"></a>唯一索引和普通索引</h4><ul>
+<li><p>二者查询性能差不多。主要区别在于更新的记录目标页不在内存中时，<strong>普通索引</strong>更新会使用change Buffer。<strong>唯一索引</strong>，由于需要校验数据的唯一性，因此每次更新操作都需要读磁盘把数据载进内存，涉及IO操作</p>
+<ul>
+<li>在不影响数据一致性的前提下， InnoDB会将这些更新操作缓存在change buffer中， 这样就不需要从磁盘中读入这个数据页了。 在下次查询需要访问这个数据页的时候， 将数据页读入内存， 然后执行change buffer中与这个页有关的操作。 通过这种方式就能保证这个数据逻辑的正确性</li>
+<li>change buffer中的操作应用到原数据页，得到最新结果的过程称为merge<ol>
+<li>访问这个数据页会触发merge。</li>
+<li>系统有后台线程会定期merge。</li>
+<li>在数据库正常关闭（shutdown） 的过程中，也会执行merge操作</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>change Buffer与redo log 区别</p>
+<ul>
+<li>change Buffer主要用于减少读磁盘的次数，在必要读磁盘时再更新数据。</li>
+<li>redo log 则是减少内存更新后，写磁盘的次数</li>
+</ul>
+<p>merge的执行流程是这样的：</p>
+<ol>
+<li>从磁盘读入数据页到内存（老版本的数据页）；</li>
+<li>从change buffer里找出这个数据页的change buffer 记录(可能有多个），依次应用，得到新版数据页；</li>
+<li>写redo log。这个redo log包含了数据的变更和change buffer的变更</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h4 id="聚集索引和非聚集索引"><a href="#聚集索引和非聚集索引" class="headerlink" title="聚集索引和非聚集索引"></a>聚集索引和非聚集索引</h4><ul>
+<li><p>聚集索引</p>
+<p>：索引结构和数据一起存放的索引。主键索引属于聚集索引，物理地址连续</p>
+<ul>
+<li>优点：查询速度快，不需要进行二次查询</li>
+<li>缺点：<ul>
+<li>依赖于有序的数据：如果索引的数据不是有序的，需要在插入时排序</li>
+<li>更新代价大：被索引的列进行修改时，对应的索引也要修改，而叶子节点也包含着数据，也要更新，代价比较大。所以对于主键索引来说，一般不可被修改</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>非聚集索引</p>
+<p>：索引结构和数据分开存放的索引。二级索引属于非聚集索引，逻辑上连续，物理地址不连续</p>
+<ul>
+<li>优点：更新代价比聚集索引小</li>
+<li>缺点：<ul>
+<li>依赖于有序的数据</li>
+<li>可能会产生二次查询</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>非聚集索引不一定回表查询：查询的字段刚好建立了索引，直接返回就行了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT name FROM table WHERE name=&#x27;guang19&#x27;;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h4><ul>
+<li>一个索引包含（或者说覆盖）所有需要查询的字段的值，我们就称之为“覆盖索引”。覆盖索引就是把要查询出的列和索引是对应的，不做回表操作</li>
+</ul>
+<h4 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h4><ul>
+<li>where语句中包含or时，可能会导致索引失效<ul>
+<li>若or的条件中包含非索引，就会只用全表扫描的。如果or的条件两边都是索引，那么会使用<code>index_merge</code>的优化技术</li>
+<li>index_merge：<strong>对多个索引分别进行条件扫描，然后将它们各自的结果进行合并</strong></li>
+</ul>
+</li>
+<li>where语句中索引列使用了负向查询，可能会导致索引失效<ul>
+<li>负向查询包括：NOT、!&#x3D;、&lt;&gt;、!&lt;、!&gt;、NOT IN、NOT LIKE等</li>
+</ul>
+</li>
+<li>对索引列进行<strong>运算</strong>，一定会导致索引失效</li>
+<li>在索引列上使用<strong>内置函数</strong>，一定会导致索引失效</li>
+<li>like通配符可能会导致索引失效，未满足最左匹配原则。</li>
+<li>隐式类型转换导致的索引失效，如索引列user_id为varchar类型，使用int做条件关联。或者关联表字符集编码不一致。</li>
+<li>索引字段可以为null，使用is null或is not null时，可能会导致索引失效</li>
+<li>联合索引未满足最左匹配原则</li>
+</ul>
+<h4 id="建立索引的注意事项"><a href="#建立索引的注意事项" class="headerlink" title="建立索引的注意事项"></a>建立索引的注意事项</h4><ul>
+<li><strong>选择合适的字段创建索引：</strong><ul>
+<li><strong>不为 NULL 的字段</strong> ：索引字段的数据应该尽量不为 NULL，因为对于数据为 NULL 的字段，数据库较难优化。如果字段频繁被查询，但又避免不了为 NULL，建议使用 0,1,true,false 这样语义较为清晰的短值或短字符作为替代。</li>
+<li><strong>被频繁查询的字段</strong> ：我们创建索引的字段应该是查询操作非常频繁的字段。</li>
+<li><strong>被作为条件查询的字段</strong> ：被作为 WHERE 条件查询的字段，应该被考虑建立索引。</li>
+<li><strong>频繁需要排序的字段</strong> ：索引已经排序，这样查询可以利用索引的排序，加快排序查询时间。</li>
+<li><strong>被经常频繁用于连接的字段</strong> ：经常用于连接的字段可能是一些外键列，对于外键列并不一定要建立外键，只是说该列涉及到表与表的关系。对于频繁被连接查询的字段，可以考虑建立索引，提高多表连接查询的效率。</li>
+</ul>
+</li>
+<li><strong>被频繁更新的字段应该慎重建立索引</strong>：虽然索引能带来查询上的效率，但是维护索引的成本也是不小的。 如果一个字段不被经常查询，反而被经常修改，那么就更不应该在这种字段上建立索引了。</li>
+<li><strong>尽可能的考虑建立联合索引而不是单列索引</strong>：因为索引是需要占用磁盘空间的，可以简单理解为每个索引都对应着一颗 B+树。如果一个表的字段过多，索引过多，那么当这个表的数据达到一个体量后，索引占用的空间也是很多的，且修改索引时，耗费的时间也是较多的。如果是联合索引，多个字段在一个索引上，那么将会节约很大磁盘空间，且修改数据的操作效率也会提升。</li>
+<li><strong>注意避免冗余索引</strong>：冗余索引指的是索引的功能相同，能够命中索引(a, b)就肯定能命中索引(a) ，那么索引(a)就是冗余索引。如（name,city ）和（name ）这两个索引就是冗余索引，能够命中前者的查询肯定是能够命中后者的 在大多数情况下，都应该尽量扩展已有的索引而不是创建新索引。</li>
+<li><strong>考虑在字符串类型的字段上使用前缀索引代替普通索引</strong>：前缀索引仅限于字符串类型，较普通索引会占用更小的空间，所以可以考虑使用前缀索引带替普通索引</li>
+</ul>
+<h4 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h4><ul>
+<li>最左匹配原则：查询条件中必须要有联合索引的第一个字段才可以使用索引</li>
+<li>索引覆盖：不满足最左匹配原则的情况下，如果查询的字段都在联合索引中，也可以使用到索引，并且不需要回表操作</li>
+</ul>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><h4 id="redo-log-重做日志"><a href="#redo-log-重做日志" class="headerlink" title="redo log(重做日志)"></a>redo log(重做日志)</h4><ul>
+<li><p>InnoDB独有，在系统崩溃时可以通过<code>redo log</code>恢复数据</p>
+</li>
+<li><p>MySQL中，查询记录是会一次将一页的信息都查询出来，加载到<code>Buffer Pool</code>中，后续查询都在<code>Buffer Pool</code>中进行，减少IO开销，更新数据也会在<code>Buffer Pool</code>中更新。然后会把在这个数据页上所做的修改，记录到<code>redo log buffer</code>中，接着刷盘到<code>redo log</code>文件中</p>
+<blockquote>
+<p>理想情况下，事务一提交就会进行刷盘，但实际情况下，刷盘的实际是根据策略来进行的</p>
+<p>每条redo记录由<code>表空间号+数据页号+偏移量+修改数据长度+具体修改数据</code>组成</p>
+</blockquote>
+</li>
+<li><p><strong>刷盘时机</strong>：通过设置<code>innodb_flush_log_at_trx_commit</code>参数，支持三种策略</p>
+<ul>
+<li>0：每次事务提交时不进行刷盘操作，宕机或者崩溃可能会有1秒的数据损失</li>
+<li>1：每次事务提交时进行刷盘操作（默认），不会有数据损失</li>
+<li>2：每次事务提交时，只把redo log buffer内容写入page cache，MySQL崩溃不会有损失，宕机可能会有一秒损失</li>
+<li>除此之外，InnoDB引擎有一个后台线程，每隔1秒，会把<code>redo log buffer</code>中的内容写入文件系统缓存（page cache）中，然后调用<code>fsync</code>进行刷盘。当<code>redo log buffer</code>占用空间即将达到<code>innodb_log_buffer_size</code>一半时，后台线程也会主动刷盘</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_20.png" alt="刷盘"></p>
+</li>
+<li><p><strong>日志文件组</strong>：硬盘上存储的 <code>redo log</code> 日志文件不只一个，而是以一个<strong>日志文件组</strong>的形式出现的，每个的<code>redo</code>日志文件大小都是一样的</p>
+<ul>
+<li><strong>write pos</strong> ：当前记录的位置，一边写一边后移</li>
+<li><strong>checkpoint</strong> ：当前要擦除的位置，也是往后推移</li>
+<li>每次刷盘写入日志时，write pos会后移；每次MySQL加载日志文件组恢复数据时，会清空加载过的<code>redo log</code>，checkpoint会后移</li>
+</ul>
+</li>
+</ul>
+<h4 id="binlog"><a href="#binlog" class="headerlink" title="binlog"></a>binlog</h4><ul>
+<li><p>binlog是逻辑日志，记录内容是语句的原始逻辑，属于<code>MySQL Server</code>层。不管使用什么引擎，只要发生表更新，都会产生binlog。<strong>主要用于主从复制和数据恢复</strong></p>
+</li>
+<li><p><strong>三种格式</strong>：</p>
+<ul>
+<li>statement：记录SQL语句原文</li>
+<li>row：记录SQL原句和操作的具体数据，比较占用空间</li>
+<li>mixed：statement和row的混合，如果SQL语句会引起数据不一致，使用row；否则，使用statement</li>
+</ul>
+</li>
+<li><p><strong>写入时机</strong>：事务执行过程中，先将日志写到binlog cache，事务提交时，再将binlog cache写入binlog文件中。</p>
+<ul>
+<li><p>一个事务的<code>binlog</code>不能被拆开，无论这个事务多大，也要确保一次性写入，所以系统会给每个线程分配一个块内存作为<code>binlog cache</code></p>
+</li>
+<li><p>设置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sync_binlog</span><br></pre></td></tr></table></figure>
+
+<p>控制刷盘时机：</p>
+<ul>
+<li>0：每次提交事务只write，系统自行判断执行fsync</li>
+<li>1：每次提交事务都fsync</li>
+<li>N：累计N个事务再执行fsync</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_21.png" alt="binlog"></p>
+</li>
+</ul>
+<h4 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h4><ul>
+<li><p><code>redo log</code>（重做日志）让<code>InnoDB</code>存储引擎拥有了崩溃恢复能力；<code>binlog</code>（归档日志）保证了<code>MySQL</code>集群架构的数据一致性，但二者的写入时机不同</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_22.png" alt="写入时机"></p>
+</li>
+<li><p>为了防止binlog和redo log数据不一致，将<code>redo log</code>的写入拆成了两个步骤<code>prepare</code>和<code>commit</code>两个阶段</p>
+<ul>
+<li>在使用<code>redo log</code>恢复数据时，如果发现redo log还处于 prepare阶段，并且没有对应的binlog，就会回滚该事务</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_23.png" alt="两阶段提交"></p>
+</li>
+</ul>
+<h4 id="undo-log-回滚日志"><a href="#undo-log-回滚日志" class="headerlink" title="undo log(回滚日志)"></a>undo log(回滚日志)</h4><ul>
+<li>保证事务的原子性，所有事务的修改都会先记录到undo log中，在执行相关操作。回滚日志会优先于数据持久化到磁盘上，宕机也可以回滚</li>
+</ul>
+<h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><h4 id="InnoDB对MVCC的实现"><a href="#InnoDB对MVCC的实现" class="headerlink" title="InnoDB对MVCC的实现"></a>InnoDB对MVCC的实现</h4><ul>
+<li><p>通过隐藏字段、Read View和undo log实现MVCC</p>
+<ul>
+<li>隐藏字段：每行数据有三个隐藏字段<ul>
+<li><code>DB_TRX_ID</code>：最后一次插入或者更新该行的事务id</li>
+<li><code>DB_ROLL_PTR</code>：回滚指针，指向改行的undo log</li>
+<li><code>DB_ROW_ID</code>：没有主键且没有唯一非空索引的情况下，<code>InnoDB</code>会使用该id生成聚簇索引</li>
+</ul>
+</li>
+<li>ReadView：主要用来做可见性判断，保存了当前对本事务不可见的其他活跃事务<ul>
+<li><code>m_low_limit_id</code>：目前出现过的最大的事务 ID+1，即下一个将被分配的事务 ID。大于等于这个 ID 的数据版本均不可见</li>
+<li><code>m_up_limit_id</code>：活跃事务列表 <code>m_ids</code> 中最小的事务 ID，如果 <code>m_ids</code> 为空，则 <code>m_up_limit_id</code> 为 <code>m_low_limit_id</code>。小于这个 ID 的数据版本均可见</li>
+<li><code>m_ids</code>：<code>Read View</code> 创建时其他未提交的活跃事务 ID 列表。创建 <code>Read View</code>时，将当前未提交事务 ID 记录下来，后续即使它们修改了记录行的值，对于当前事务也是不可见的。<code>m_ids</code> 不包括当前事务自己和已提交的事务（正在内存中）</li>
+<li><code>m_creator_trx_id</code>：创建该 <code>Read View</code> 的事务 ID</li>
+</ul>
+</li>
+<li>undo log：若该记录被其他事务占用或当前版本对该事务不可见，则可以通过 <code>undo log</code> 读取之前的版本数据，以此实现非锁定读</li>
+</ul>
+</li>
+<li><p>数据可见性算法</p>
+<p>：本次事务中读取某一行的数据</p>
+<ul>
+<li>如果<code>DB_TRX_ID</code>&lt;<code>m_up_limit_id</code>，则可见</li>
+<li>如果<code>DB_TRX_ID</code>&gt;&#x3D;<code>m_low_limit_id</code>，表明事务快照之后才出现这一行数据，不可见</li>
+<li><code>m_ids</code>为空，表示当前事务是最新的事务，可见</li>
+<li>如果<code>m_up_limit_id</code>&lt;&#x3D;<code>DB_TRX_ID</code>&lt;<code>m_low_limit_id</code>，若该事务id存在m_ids中，则不可见，否则可见</li>
+<li>如果事务不可见，可以通过<code>DB_ROLL_PTR</code>指针，查询该行的历史数据是否可见</li>
+</ul>
+</li>
+</ul>
+<h4 id="RC和RR隔离级别下MVCC的ReadView生成时机不同"><a href="#RC和RR隔离级别下MVCC的ReadView生成时机不同" class="headerlink" title="RC和RR隔离级别下MVCC的ReadView生成时机不同"></a>RC和RR隔离级别下MVCC的ReadView生成时机不同</h4><ul>
+<li>RC下，每次查询前都要生成一个ReadView</li>
+<li>RR下，只有第一次查询生成一个ReadView</li>
+</ul>
+<h4 id="MVCC-Next-key-Lock防止幻读（RR隔离级别）"><a href="#MVCC-Next-key-Lock防止幻读（RR隔离级别）" class="headerlink" title="MVCC+Next-key-Lock防止幻读（RR隔离级别）"></a>MVCC+Next-key-Lock防止幻读（RR隔离级别）</h4><ul>
+<li>执行普通的select语句：为快照读，只在第一次查询时生成ReadView，后续事务提交不影响，可以解决幻读</li>
+<li>执行select…for update&#x2F;lock in share mode、insert、update、delete等语句：为锁定读，读取的是最新的数据。InnoDB使用Next-key-Lock锁定读取到的记录以及它们之间的间隙，防止其他事务在查询范围内插入数据，防止了幻读</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_24.png" alt="SQL语句执行流程"></p>
+<blockquote>
+<ul>
+<li>查询语句的执行流程如下：权限校验（如果命中缓存）—&gt;查询缓存—&gt;分析器—&gt;优化器—&gt;权限校验—&gt;执行器—&gt;引擎</li>
+<li>更新语句执行流程如下：分析器—-&gt;权限校验—-&gt;执行器—&gt;引擎—redo log(prepare 状态)—&gt;binlog—&gt;redo log(commit状态)</li>
+</ul>
+</blockquote>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><h4 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h4><ul>
+<li><p>全局锁：对整个数据库实例加锁，命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Flush tables with read lock (FTWRL)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>应用场景：全库逻辑备份</li>
+</ul>
+</li>
+<li><p>表锁：分为表锁和元数据锁</p>
+<ul>
+<li><p>表锁：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock tables t1 read,t2 write</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对其他线程来说，t1表，可以读，不可以写；t2表，读写都不可以</li>
+<li>对本线程来说，t1表只能读，t2表只能读写</li>
+</ul>
+</li>
+<li><p>元数据锁：Metadata Lock(MDL)，面向DML和DDL之间得并发控制，元数据锁不需要我们显式的加，系统默认会加</p>
+<ul>
+<li>当做DML操作时，会申请一个MDL读锁</li>
+<li>当做DDL操作时，会申请一个MDL写锁</li>
+<li>读锁之间不互斥，读写和写写之间都互斥</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>行锁：InnoDB的行锁是针对索引加的，而不是针对记录，该索引不能失效，否则会升级为表锁</p>
+<ul>
+<li><code>select * from t lock in share mode</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="两阶段锁"><a href="#两阶段锁" class="headerlink" title="两阶段锁"></a>两阶段锁</h4><ul>
+<li><p>在InnoDB事务中， 行锁是在需要的时候才加上的， 但并不是不需要了就立刻释放， 而是要等到事务结束时才释放</p>
+<ul>
+<li>事务B要在事务A提交之后才会执行</li>
+</ul>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_30.png" alt="示例"></p>
+</li>
+<li><p>出现死锁：</p>
+<ul>
+<li>进入等待，超时</li>
+<li>发起死锁检测，回滚死锁链中的某一个事务，打破死锁</li>
+</ul>
+</li>
+</ul>
+<h4 id="加锁原则"><a href="#加锁原则" class="headerlink" title="加锁原则"></a>加锁原则</h4><ul>
+<li>原则1： 加锁的基本单位是next-keylock，前开后闭区间</li>
+<li>原则2： 查找过程中访问到的对象才会加锁</li>
+<li>优化1： 索引上的等值查询， 给唯一索引加锁的时候， next-keylock退化为行锁</li>
+<li>优化2： 索引上的等值查询， 向右遍历时且最后一个值不满足等值条件的时候， next-key lock退化为间隙锁。</li>
+<li>一个bug： 唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li>
+</ul>
+<h3 id="特殊情况处理"><a href="#特殊情况处理" class="headerlink" title="特殊情况处理"></a>特殊情况处理</h3><h4 id="超大分页如何处理？"><a href="#超大分页如何处理？" class="headerlink" title="超大分页如何处理？"></a>超大分页如何处理？</h4><ul>
+<li>使用主键id优化，找到上次分页的最大ID，利用主键索引进行查询。<strong>要求ID必须是连续的</strong></li>
+<li>覆盖索引优化，先查出索引的主键ID，再使用主键索引拿数据</li>
+</ul>
+<h4 id="优化SQL？"><a href="#优化SQL？" class="headerlink" title="优化SQL？"></a>优化SQL？</h4><ul>
+<li>添加合适索引：索引创建原则</li>
+<li>优化表结构：数据类型越小越好、尽量少使用NULL</li>
+<li>优化查询语句：是否命中索引等</li>
+</ul>
+<h4 id="分布式主键方案？"><a href="#分布式主键方案？" class="headerlink" title="分布式主键方案？"></a>分布式主键方案？</h4><ul>
+<li>数据库自增序列</li>
+<li>UUID</li>
+<li>Redis生成ID</li>
+<li>等</li>
+</ul>
+<h4 id="分库分表？"><a href="#分库分表？" class="headerlink" title="分库分表？"></a>分库分表？</h4><ul>
+<li><p>分表：单表数据量过大，会影响查询性能。将一个表的数据放在多个表中</p>
+<ul>
+<li><p>垂直分表：把一个表的多个字段拆分为多个表，一般将字段作冷热拆分，冷字段一个表，热字段一个表</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_31.png" alt="垂直分表案例"></p>
+</li>
+<li><p>水平分表：减少单个表中的数据量</p>
+</li>
+</ul>
+</li>
+<li><p>分库：单库的并发量最多到2000，将一个库的数据拆分到多个库中，可以增加并发量</p>
+<ul>
+<li><p>垂直分库：将关联度低的表存放在不同的库中</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_32.png" alt="垂直分库案例"></p>
+</li>
+<li><p>水平分库：提升单个业务系统的QPS</p>
+<p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_33.png" alt="水平分库案例"></p>
+</li>
+</ul>
+</li>
+<li><p>垂直切分的优缺点：</p>
+<ul>
+<li>优点：切合业务系统结构；方便对数据进行管理；提升系统的高并发性能</li>
+<li>缺点：没有解决单表数据量过大的问题；分布式事务处理复杂</li>
+</ul>
+</li>
+<li><p>水平切分的优缺点：</p>
+<ul>
+<li>优点：提升系统性能，不存在性能瓶颈；对业务没有影响</li>
+<li>缺点：数据多次扩展难度和维护大</li>
+</ul>
+</li>
+</ul>
+<h4 id="大表查询优化"><a href="#大表查询优化" class="headerlink" title="大表查询优化"></a>大表查询优化</h4><ul>
+<li>优化sql语句，增加索引</li>
+<li>增加缓存，使用redis</li>
+<li>主从复制，读写分离</li>
+<li>分库分表</li>
+</ul>
+<h4 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h4><p><img src="https://hehemagic.github.io/2022/01/03/day29/day29_34.png" alt="主从复制过程"></p>
+<ul>
+<li><ol>
+<li>Master的更新事件(update、insert、delete)会按照顺序写入bin-log中。当Slave连接到Master的后,Master机器会为Slave开启 binlog dump线程,该线程会去读取bin-log日志</li>
+<li>Slave连接到Master后,Slave库有一个I&#x2F;O线程 通过请求binlog dump thread读取bin-log日志,然后写入从库的relay log日志中。</li>
+<li>Slave还有一个 SQL线程,实时监控 relay-log日志内容是否有更新,解析文件中的SQL语句,在Slave数据库中去执行。</li>
+</ol>
+</li>
+</ul>
+<h4 id="主从复制同步方式"><a href="#主从复制同步方式" class="headerlink" title="主从复制同步方式"></a>主从复制同步方式</h4><ul>
+<li><strong>异步复制</strong> ：Mysql主从同步 默认是异步复制的。就是上面三步中,只有第一步是同步的(也就是Mater写入bin log日志),就是主库写入binlog日志后即可成功返回客户端，无须等待binlog日志传递给从库的过程。 Master 不关心 Slave 的数据有没有写入成功。因此如果Master和Slave之间有网络延迟，就会造成暂时的数据不一致的现象；如果Master出故障，而数据还没有复制过去，则会造成数据丢失；但也有好处，<strong>效率较其他两种复制方式最高</strong>。</li>
+<li><strong>同步复制</strong> ：Master主机将事件发送给Slave主机后会触发一个等待，直到所有Slave节点（如果有多个Slave）返回数据复制成功的信息给Master。 这种复制方式最安全，但是同时，效率也是最差的。</li>
+<li><strong>半同步复制</strong> ：对于半同步复制而言，Master主机将事件发送给Slave主机后会触发一个等待，直到其中一个Slave节点（如果有多个Slave）返回数据复制成功的信息给Master。 由此增强了数据的一致性，但是因为Master主机的确认开销，会损耗一部分的性能； 另外，半同步复制除了不需要等待所有Slave主机确认事件的接收外，半同步数据复制并不要求那些事件完全地执行，因此，仍有可能看到在Slave主机上数据复制延迟的发生，如果因为网络延迟等原因造成Slave迟迟没有返回复制成功的信息，超过了Master设置的超时时长，<strong>半同步复制就降级为异步复制方式</strong>，而后继续数据复制。</li>
+</ul>
+<h4 id="Mysql主从同步延时产生原因-怎么优化？"><a href="#Mysql主从同步延时产生原因-怎么优化？" class="headerlink" title="Mysql主从同步延时产生原因?怎么优化？"></a>Mysql主从同步延时产生原因?怎么优化？</h4><ul>
+<li>原因：<ul>
+<li>主节点如果执行一个很大的事务，会对主从延迟产生较大的影响</li>
+<li>网络延迟，日志较大，slave数量过多</li>
+<li>机器性能问题，从节点是否使用了“烂机器”</li>
+</ul>
+</li>
+<li>优化：<ul>
+<li>大事务：将大事务分为小事务，分批更新数据</li>
+<li>减少Slave的数量，不要超过5个，减少单次事务的大小</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -1551,7 +2144,7 @@ int &amp;r2 = c;//这是错误的用法，因为r2不是常量，那就有可能
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-11 20:43:40" itemprop="dateModified" datetime="2023-05-11T20:43:40+08:00">2023-05-11</time>
+      <time title="Modified: 2023-05-15 17:29:18" itemprop="dateModified" datetime="2023-05-15T17:29:18+08:00">2023-05-15</time>
     </span>
 
   
@@ -2357,6 +2950,121 @@ int &amp;r2 = c;//这是错误的用法，因为r2不是常量，那就有可能
 <p><strong>示例 2：</strong></p>
 <p><img src="https://assets.leetcode.com/uploads/2020/12/01/tree2.jpg" alt="img"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [5,1,4,null,null,3,6]</span><br><span class="line">输出：false</span><br><span class="line">解释：根节点的值是 5 ，但是右子节点的值是 4 。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//中序遍历得到的数组必须是严格升序</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">dfs</span>(root,res);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(TreeNode* node,vector&lt;<span class="type">int</span>&gt;&amp; res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node==<span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">true</span> ;<span class="comment">//递归结束条件</span></span><br><span class="line"></span><br><span class="line">        <span class="type">bool</span> Left = <span class="built_in">dfs</span>(node-&gt;left,res);<span class="comment">//左</span></span><br><span class="line">        <span class="keyword">if</span>(res.<span class="built_in">empty</span>()) res.<span class="built_in">push_back</span>(node-&gt;val);<span class="comment">//中</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(res.<span class="built_in">back</span>()&gt;= node-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">else</span> res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">bool</span> Right = <span class="built_in">dfs</span>(node-&gt;right,res);<span class="comment">//右</span></span><br><span class="line">        <span class="keyword">return</span> Left&amp;&amp;Right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">----------------------------------------------------------------------</span><br><span class="line"><span class="comment">//也可以先遍历树，然后得到中序遍历的数组检查是否严格升序（比第一种方法理解起来要简单，但是牺牲了效率）</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//中序遍历得到的数组必须是严格升序</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">dfs</span>(root,res);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;res.<span class="built_in">size</span>();i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(res[i]&lt;=res[i<span class="number">-1</span>]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(TreeNode* node,vector&lt;<span class="type">int</span>&gt;&amp; res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node==<span class="literal">nullptr</span>) <span class="keyword">return</span> ;<span class="comment">//递归结束条件</span></span><br><span class="line">        <span class="built_in">dfs</span>(node-&gt;left,res);<span class="comment">//左</span></span><br><span class="line">        res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        <span class="built_in">dfs</span>(node-&gt;right,res);<span class="comment">//右</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉搜索树的最小绝对差"><a href="#二叉搜索树的最小绝对差" class="headerlink" title="二叉搜索树的最小绝对差"></a>二叉搜索树的最小绝对差</h2><p>给你一个二叉搜索树的根节点 <code>root</code> ，返回 <strong>树中任意两不同节点值之间的最小差值</strong> 。</p>
+<p>差值是一个正数，其数值等于两值之差的绝对值。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/05/bst1.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [4,2,6,1,3]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/05/bst2.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [1,0,48,null,null,12,49]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMinimumDifference</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//先中序遍历(递归) 然后再找数组的最小差值</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">        <span class="built_in">bfs</span>(root,ans);</span><br><span class="line">        <span class="type">int</span> min = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;ans.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">abs</span>(ans[i+<span class="number">1</span>]-ans[i])&lt;min) min = <span class="built_in">abs</span>(ans[i+<span class="number">1</span>]-ans[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(TreeNode* node,vector&lt;<span class="type">int</span>&gt;&amp; ans)</span><span class="comment">//前序遍历</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node==<span class="literal">nullptr</span>) <span class="keyword">return</span>;<span class="comment">//递归终止条件</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">bfs</span>(node-&gt;left,ans);<span class="comment">//左</span></span><br><span class="line">        ans.<span class="built_in">push_back</span>(node-&gt;val);<span class="comment">//中</span></span><br><span class="line">        <span class="built_in">bfs</span>(node-&gt;right,ans);<span class="comment">//右</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMinimumDifference</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//先中序遍历(迭代) 然后再找数组的最小差值</span></span><br><span class="line">        stack&lt;TreeNode*&gt; st;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">        TreeNode* cur = root;</span><br><span class="line">        <span class="keyword">while</span>(cur!=<span class="literal">nullptr</span> || !st.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(cur!=<span class="literal">nullptr</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                st.<span class="built_in">push</span>(cur);</span><br><span class="line">                cur = cur-&gt;left;<span class="comment">//左</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cur = st.<span class="built_in">top</span>();</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">                ans.<span class="built_in">push_back</span>(cur-&gt;val);<span class="comment">//中</span></span><br><span class="line">                cur = cur-&gt;right;<span class="comment">//右</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> min = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;ans.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">abs</span>(ans[i+<span class="number">1</span>]-ans[i])&lt;min) min = <span class="built_in">abs</span>(ans[i+<span class="number">1</span>]-ans[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">------------------------------------------------------------------------------------------------</span><br><span class="line">巧妙利用指针</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TreeNode* pre = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> result= INT_MAX;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMinimumDifference</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//中序遍历 利用pre指针来做</span></span><br><span class="line">        <span class="built_in">bfs</span>(root);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(TreeNode* node)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node==<span class="literal">nullptr</span>)  <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">bfs</span>(node-&gt;left);<span class="comment">//左</span></span><br><span class="line">        <span class="keyword">if</span>(pre!=<span class="literal">nullptr</span>) result = <span class="built_in">min</span>(result,node-&gt;val-pre-&gt;val);<span class="comment">//中</span></span><br><span class="line">        pre = node;</span><br><span class="line">        <span class="built_in">bfs</span>(node-&gt;right);<span class="comment">//右</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉搜索树中的众数："><a href="#二叉搜索树中的众数：" class="headerlink" title="二叉搜索树中的众数："></a>二叉搜索树中的众数：</h2><p>给你一个含重复值的二叉搜索树（BST）的根节点 <code>root</code> ，找出并返回 BST 中的所有 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%97%E6%95%B0/44796">众数</a>（即，出现频率最高的元素）。</p>
+<p>如果树中有不止一个众数，可以按 <strong>任意顺序</strong> 返回。</p>
+<p>假定 BST 满足如下定义：</p>
+<ul>
+<li>结点左子树中所含节点的值 <strong>小于等于</strong> 当前节点的值</li>
+<li>结点右子树中所含节点的值 <strong>大于等于</strong> 当前节点的值</li>
+<li>左子树和右子树都是二叉搜索树</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/11/mode-tree.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [1,null,2,2]</span><br><span class="line">输出：[2]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [0]</span><br><span class="line">输出：[0]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findMode</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//中序遍历</span></span><br><span class="line">        unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt; m;<span class="comment">//构建map</span></span><br><span class="line">        <span class="built_in">bfs</span>(root,m);</span><br><span class="line">        <span class="type">int</span> max_count=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it=m.<span class="built_in">begin</span>();it!=m.<span class="built_in">end</span>();it++) <span class="comment">//用it迭代器遍历访问map</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(it-&gt;second &gt;=max_count) max_count = it-&gt;second;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it=m.<span class="built_in">begin</span>();it!=m.<span class="built_in">end</span>();it++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(it-&gt;second==max_count) ans.<span class="built_in">push_back</span>(it-&gt;first);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(TreeNode* node,unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&amp; m)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node==<span class="literal">nullptr</span>) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">bfs</span>(node-&gt;left,m);<span class="comment">//左</span></span><br><span class="line">        m[node-&gt;val]++;<span class="comment">//中</span></span><br><span class="line">        <span class="built_in">bfs</span>(node-&gt;right,m);<span class="comment">//右</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line"><span class="comment">//更好的方式，还是用pre 以及是否清空之前的vector容器元素</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> maxCount = <span class="number">0</span>; <span class="comment">// 最大频率</span></span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>; <span class="comment">// 统计频率</span></span><br><span class="line">    TreeNode* pre = <span class="literal">NULL</span>;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; result;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">searchBST</span><span class="params">(TreeNode* cur)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cur == <span class="literal">NULL</span>) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">searchBST</span>(cur-&gt;left);       <span class="comment">// 左</span></span><br><span class="line">                                    <span class="comment">// 中</span></span><br><span class="line">        <span class="keyword">if</span> (pre == <span class="literal">NULL</span>) &#123; <span class="comment">// 第一个节点</span></span><br><span class="line">            count = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pre-&gt;val == cur-&gt;val) &#123; <span class="comment">// 与前一个节点数值相同</span></span><br><span class="line">            count++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 与前一个节点数值不同</span></span><br><span class="line">            count = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pre = cur; <span class="comment">// 更新上一个节点</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (count == maxCount) &#123; <span class="comment">// 如果和最大值相同，放进result中</span></span><br><span class="line">            result.<span class="built_in">push_back</span>(cur-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (count &gt; maxCount) &#123; <span class="comment">// 如果计数大于最大值频率</span></span><br><span class="line">            maxCount = count;   <span class="comment">// 更新最大频率</span></span><br><span class="line">            result.<span class="built_in">clear</span>();     <span class="comment">// 很关键的一步，不要忘记清空result，之前result里的元素都失效了</span></span><br><span class="line">            result.<span class="built_in">push_back</span>(cur-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">searchBST</span>(cur-&gt;right);      <span class="comment">// 右</span></span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findMode</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        count = <span class="number">0</span>;</span><br><span class="line">        maxCount = <span class="number">0</span>;</span><br><span class="line">        TreeNode* pre = <span class="literal">NULL</span>; <span class="comment">// 记录前一个节点</span></span><br><span class="line">        result.<span class="built_in">clear</span>();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">searchBST</span>(root);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉树的最近公共祖先：回溯"><a href="#二叉树的最近公共祖先：回溯" class="headerlink" title="二叉树的最近公共祖先：回溯"></a>二叉树的最近公共祖先：回溯</h2><p>给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/8918834?fr=aladdin">百度百科</a>中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（<strong>一个节点也可以是它自己的祖先</strong>）。”</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//用递归来做  1.确定输入参数和返回值 2.确定终止条件 3.确定单层逻辑</span></span><br><span class="line">        <span class="comment">//后序遍历来做 左、右、中(从一个节点出发，到根节点，如果找到了p q就返回这个节点，如果没找到就返回NULL )</span></span><br><span class="line">        <span class="keyword">if</span>(root==q || root==p || root==<span class="literal">NULL</span>) <span class="keyword">return</span> root;</span><br><span class="line"></span><br><span class="line">        TreeNode* Left = <span class="built_in">lowestCommonAncestor</span>(root-&gt;left,p,q);</span><br><span class="line">        TreeNode* Right = <span class="built_in">lowestCommonAncestor</span>(root-&gt;right,p,q);</span><br><span class="line">        <span class="comment">//判断逻辑是 如果递归遍历遇到q，就将q返回，遇到p 就将p返回，那么如果 左右子树的返回值都不为空，说明此时的中节点，一定是q 和p 的最近祖先。</span></span><br><span class="line">        <span class="keyword">if</span>(Left==<span class="literal">NULL</span> &amp;&amp; Right==<span class="literal">NULL</span>)  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span>(Left==<span class="literal">NULL</span> ) <span class="keyword">return</span> Right;</span><br><span class="line">        <span class="keyword">if</span>(Right==<span class="literal">NULL</span>) <span class="keyword">return</span> Left;</span><br><span class="line">        <span class="keyword">return</span> root;<span class="comment">//返回当前节点的时候一定是找到了p和q</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉搜索树的最近公共祖先"><a href="#二叉搜索树的最近公共祖先" class="headerlink" title="二叉搜索树的最近公共祖先"></a>二叉搜索树的最近公共祖先</h2><p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/8918834?fr=aladdin">百度百科</a>中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（<strong>一个节点也可以是它自己的祖先</strong>）。”</p>
+<p>例如，给定如下二叉搜索树: root &#x3D; [6,2,8,0,4,7,9,null,null,3,5]</p>
+<p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/14/binarysearchtree_improved.png" alt="img"></p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8</span><br><span class="line">输出: 6 </span><br><span class="line">解释: 节点 2 和节点 8 的最近公共祖先是 6。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4</span><br><span class="line">输出: 2</span><br><span class="line">解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//递归,后序</span></span><br><span class="line">        <span class="keyword">if</span>(root==p || root==q || root==<span class="literal">NULL</span>) <span class="keyword">return</span> root;</span><br><span class="line"></span><br><span class="line">        TreeNode* Left = <span class="built_in">lowestCommonAncestor</span>(root-&gt;left,p,q);</span><br><span class="line">        TreeNode* Right = <span class="built_in">lowestCommonAncestor</span>(root-&gt;right,p,q);</span><br><span class="line">        <span class="keyword">if</span>(Left==<span class="literal">NULL</span> &amp;&amp; Right==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span>(Left==<span class="literal">NULL</span>) <span class="keyword">return</span> Right;</span><br><span class="line">        <span class="keyword">if</span>(Right==<span class="literal">NULL</span>) <span class="keyword">return</span> Left;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">--------------------------------------------------------------------------------------------------</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:<span class="comment">//迭代的方式 只要想明白二叉搜索树中第一次出现  p-&gt;val &lt; node-&gt;val &lt; q-&gt;val的node就是最近公共祖先</span></span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(root) &#123;</span><br><span class="line">            <span class="keyword">if</span> (root-&gt;val &gt; p-&gt;val &amp;&amp; root-&gt;val &gt; q-&gt;val) &#123;</span><br><span class="line">                root = root-&gt;left;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root-&gt;val &lt; p-&gt;val &amp;&amp; root-&gt;val &lt; q-&gt;val) &#123;</span><br><span class="line">                root = root-&gt;right;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉搜索树中的插入操作"><a href="#二叉搜索树中的插入操作" class="headerlink" title="二叉搜索树中的插入操作"></a>二叉搜索树中的插入操作</h2><p>给定二叉搜索树（BST）的根节点 <code>root</code> 和要插入树中的值 <code>value</code> ，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 输入数据 <strong>保证</strong> ，新值和原始二叉搜索树中的任意节点值都不同。</p>
+<p><strong>注意</strong>，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。 你可以返回 <strong>任意有效的结果</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/10/05/insertbst.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [4,2,7,1,3], val = 5</span><br><span class="line">输出：[4,2,7,1,3,5]</span><br><span class="line">解释：另一个满足题目要求可以通过的树是：</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [40,20,60,10,30,50,70], val = 25</span><br><span class="line">输出：[40,20,60,10,30,50,70,null,null,25]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [4,2,7,1,3,null,null,null,null,null,null], val = 5</span><br><span class="line">输出：[4,2,7,1,3,5]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">insertIntoBST</span><span class="params">(TreeNode* root, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//迭代的方式</span></span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode* node = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(val);</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode* cur = root;</span><br><span class="line">        TreeNode* pre=root;<span class="comment">//用来记录上一个节点,很重要</span></span><br><span class="line">        <span class="keyword">while</span>(cur)<span class="comment">//通过迭代找到要插入的位置</span></span><br><span class="line">        &#123;</span><br><span class="line">            pre = cur;</span><br><span class="line">            <span class="keyword">if</span>(val &lt; cur-&gt;val) cur = cur-&gt;left;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(val &gt; cur-&gt;val) cur = cur-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode* node = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(val);</span><br><span class="line">        <span class="keyword">if</span>(val &gt; pre-&gt;val)<span class="comment">//判断要插到左边还是右边</span></span><br><span class="line">        &#123;</span><br><span class="line">            pre-&gt;right = node ;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            pre-&gt;left = node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除二叉搜索树中的节点：注重细节"><a href="#删除二叉搜索树中的节点：注重细节" class="headerlink" title="删除二叉搜索树中的节点：注重细节"></a>删除二叉搜索树中的节点：注重细节</h2><p>给定一个二叉搜索树的根节点 <strong>root</strong> 和一个值 <strong>key</strong>，删除二叉搜索树中的 <strong>key</strong> 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。</p>
+<p>一般来说，删除节点可分为两个步骤：</p>
+<ol>
+<li>首先找到需要删除的节点；</li>
+<li>如果找到了，删除它。</li>
+</ol>
+<p><strong>示例 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/04/del_node_1.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [5,3,6,2,4,null,7], key = 3</span><br><span class="line">输出：[5,4,6,2,null,null,7]</span><br><span class="line">解释：给定需要删除的节点值是 3，所以我们首先找到 3 这个节点，然后删除它。</span><br><span class="line">一个正确的答案是 [5,4,6,2,null,null,7], 如下图所示。</span><br><span class="line">另一个正确答案是 [5,2,6,null,4,null,7]。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">deleteNode</span><span class="params">(TreeNode* root, <span class="type">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//递归 1.确定终止条件 2.确定输入和返回值  3.确定单层逻辑</span></span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> root;<span class="comment">//确定终止条件</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(root-&gt;val == key)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;left==<span class="literal">nullptr</span> &amp;&amp; root-&gt;right==<span class="literal">nullptr</span>)<span class="comment">//被删除的是叶子节点</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">delete</span> root;<span class="comment">//释放节点，返回null</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;left==<span class="literal">nullptr</span>)<span class="comment">//被删除的节点只有右子树</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> Rnode = root-&gt;right;</span><br><span class="line">                <span class="keyword">delete</span> root;</span><br><span class="line">                <span class="keyword">return</span> Rnode;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;right==<span class="literal">nullptr</span>)<span class="comment">//被删除的的节点只有左子树</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> Lnode = root-&gt;left;</span><br><span class="line">                <span class="keyword">delete</span> root;</span><br><span class="line">                <span class="keyword">return</span> Lnode;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;  <span class="comment">// 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置</span></span><br><span class="line">                <span class="comment">// 并返回删除节点右孩子为新的根节点。</span></span><br><span class="line">                TreeNode* cur = root-&gt;right;</span><br><span class="line">                <span class="keyword">while</span>(cur-&gt;left!=<span class="literal">nullptr</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    cur = cur-&gt;left;</span><br><span class="line">                &#125;</span><br><span class="line">                cur-&gt;left = root-&gt;left;</span><br><span class="line">                TreeNode* tmp = root;   <span class="comment">// 把root节点保存一下，下面来删除</span></span><br><span class="line">                root = root-&gt;right;     <span class="comment">// 返回旧root的右孩子作为新root</span></span><br><span class="line">                <span class="keyword">delete</span> tmp;             <span class="comment">// 释放节点内存</span></span><br><span class="line">                <span class="keyword">return</span> root;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &gt; key) root-&gt;left = <span class="built_in">deleteNode</span>(root-&gt;left, key);</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &lt; key) root-&gt;right = <span class="built_in">deleteNode</span>(root-&gt;right, key);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修剪二叉搜索树"><a href="#修剪二叉搜索树" class="headerlink" title="修剪二叉搜索树"></a>修剪二叉搜索树</h2><p>给你二叉搜索树的根节点 <code>root</code> ，同时给定最小边界<code>low</code> 和最大边界 <code>high</code>。通过修剪二叉搜索树，使得所有节点的值在<code>[low, high]</code>中。修剪树 <strong>不应该</strong> 改变保留在树中的元素的相对结构 (即，如果没有被移除，原有的父代子代关系都应当保留)。 可以证明，存在 <strong>唯一的答案</strong> 。</p>
+<p>所以结果应当返回修剪好的二叉搜索树的新的根节点。注意，根节点可能会根据给定的边界发生改变。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/09/trim1.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [1,0,2], low = 1, high = 2</span><br><span class="line">输出：[1,null,2]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/09/trim2.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [3,0,4,null,2,null,null,1], low = 1, high = 3</span><br><span class="line">输出：[3,2,null,1]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">trimBST</span><span class="params">(TreeNode* root, <span class="type">int</span> low, <span class="type">int</span> high)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//递归三步法 1.确定输入和返回值  2.确定终止条件  3.确定单层逻辑</span></span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span> ) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &lt; low) &#123;</span><br><span class="line">            TreeNode* right = <span class="built_in">trimBST</span>(root-&gt;right, low, high); <span class="comment">// 寻找符合区间[low, high]的节点</span></span><br><span class="line">            <span class="keyword">return</span> right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &gt; high) &#123;</span><br><span class="line">            TreeNode* left = <span class="built_in">trimBST</span>(root-&gt;left, low, high); <span class="comment">// 寻找符合区间[low, high]的节点</span></span><br><span class="line">            <span class="keyword">return</span> left;</span><br><span class="line">        &#125;</span><br><span class="line">        root-&gt;left = <span class="built_in">trimBST</span>(root-&gt;left, low, high); <span class="comment">// root-&gt;left接入符合条件的左孩子</span></span><br><span class="line">        root-&gt;right = <span class="built_in">trimBST</span>(root-&gt;right, low, high); <span class="comment">// root-&gt;right接入符合条件的右孩子</span></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="将有序数组转换为二叉搜索树"><a href="#将有序数组转换为二叉搜索树" class="headerlink" title="将有序数组转换为二叉搜索树"></a>将有序数组转换为二叉搜索树</h2><p>给你一个整数数组 <code>nums</code> ，其中元素已经按 <strong>升序</strong> 排列，请你将其转换为一棵 <strong>高度平衡</strong> 二叉搜索树。</p>
+<p><strong>高度平衡</strong> 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/18/btree1.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [-10,-3,0,5,9]</span><br><span class="line">输出：[0,-3,9,-10,null,5]</span><br><span class="line">解释：[0,-10,5,null,-3,null,9] 也将被视为正确答案：</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/18/btree.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,3]</span><br><span class="line">输出：[3,1]</span><br><span class="line">解释：[1,null,3] 和 [3,1] 都是高度平衡二叉搜索树。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">traversal</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> left, <span class="type">int</span> right)</span> </span>&#123;<span class="comment">//2.确定输入和返回值</span></span><br><span class="line">        <span class="keyword">if</span> (left &gt; right) <span class="keyword">return</span> <span class="literal">nullptr</span>;<span class="comment">//1. 确定终止条件</span></span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> mid = left + ((right - left) / <span class="number">2</span>);<span class="comment">//3.单层递归逻辑</span></span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(nums[mid]);</span><br><span class="line">        root-&gt;left = <span class="built_in">traversal</span>(nums, left, mid - <span class="number">1</span>);</span><br><span class="line">        root-&gt;right = <span class="built_in">traversal</span>(nums, mid + <span class="number">1</span>, right);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">sortedArrayToBST</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//用递归来做，确定左右区间  三步走</span></span><br><span class="line">        TreeNode* root = <span class="built_in">traversal</span>(nums, <span class="number">0</span>, nums.<span class="built_in">size</span>() - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//凡是牵扯到构造二叉树的递归，都是返回root，并且在单层递归逻辑主体中会用到root-&gt;left = dfs(left);root-&gt;right = dfs(right)来接返回的节点</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="把二叉搜索树转换为累加树"><a href="#把二叉搜索树转换为累加树" class="headerlink" title="把二叉搜索树转换为累加树"></a>把二叉搜索树转换为累加树</h2><p>给出二叉 <strong>搜索</strong> 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），使每个节点 <code>node</code> 的新值等于原树中大于或等于 <code>node.val</code> 的值之和。</p>
+<p>提醒一下，二叉搜索树满足下列约束条件：</p>
+<ul>
+<li>节点的左子树仅包含键 <strong>小于</strong> 节点键的节点。</li>
+<li>节点的右子树仅包含键 <strong>大于</strong> 节点键的节点。</li>
+<li>左右子树也必须是二叉搜索树。</li>
+</ul>
+<p><strong>注意：</strong>本题和 1038: <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/">https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/</a> 相同</p>
+<p><strong>示例 1：</strong></p>
+<p><strong><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2019/05/03/tree.png" alt="img"></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]</span><br><span class="line">输出：[30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [0,null,1]</span><br><span class="line">输出：[1,null,1]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> k=<span class="number">0</span>;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">convertBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//当前节点的新值 等于该节点的右侧树所有的值之和+原来值</span></span><br><span class="line">        <span class="comment">//可以先中序遍历一次 得到数组 然后利用全局变量来做</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; nums;</span><br><span class="line">        <span class="built_in">getNums</span>(root,nums);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=nums.<span class="built_in">size</span>()<span class="number">-2</span>;j&gt;=<span class="number">0</span>;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            nums[j] += nums[j+<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">changeNums</span>(root,nums);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">getNums</span><span class="params">(TreeNode* root,vector&lt;<span class="type">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">nullptr</span>) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">getNums</span>(root-&gt;left,nums);</span><br><span class="line">        nums.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        <span class="built_in">getNums</span>(root-&gt;right,nums);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">changeNums</span><span class="params">(TreeNode* root,vector&lt;<span class="type">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">changeNums</span>(root-&gt;left,nums);</span><br><span class="line">        root-&gt;val = nums[k++];</span><br><span class="line">        <span class="built_in">changeNums</span>(root-&gt;right,nums);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TreeNode* pre;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">convertBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//当前节点的新值 等于该节点的右侧树所有的值之和+原来值</span></span><br><span class="line">        <span class="comment">//可以用递归来做  先走到最右侧节点  然后回溯的方式一步步进行</span></span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">dfs</span>(root);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">dfs</span><span class="params">(TreeNode*root)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">nullptr</span>) <span class="keyword">return</span> root;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">dfs</span>(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span>(pre==<span class="literal">nullptr</span>)<span class="comment">//最右侧节点的情况下</span></span><br><span class="line">        &#123;</span><br><span class="line">            pre = root;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            root-&gt;val += pre-&gt;val;<span class="comment">//这一步很关键</span></span><br><span class="line">            pre = root; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">dfs</span>(root-&gt;left);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
