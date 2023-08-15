@@ -19,24 +19,24 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1.TinyWebServer传送门：GitHub - qinguoyi&#x2F;TinyWebServer: Linux下C++轻量级Web服务器、牛客视频  GCC&#x2F;G++ 编译  （预处理 编译 汇编 链接）  静态库的制作与使用 ：gcc&#x2F;g++进行链接时，会把静态库中代码打包到可执行程序中（先得到.o文件，然后利用ar rcs libxxxx.a xxx.o  制作">
+    <meta name="description" content="TinyWebServer基础知识传送门：GitHub - qinguoyi&#x2F;TinyWebServer: Linux下C++轻量级Web服务器、牛客视频  GCC&#x2F;G++ 编译  （预处理 编译 汇编 链接）  静态库的制作与使用 ：gcc&#x2F;g++进行链接时，会把静态库中代码打包到可执行程序中（先得到.o文件，然后利用ar rcs libxxxx.a xxx.o">
 <meta property="og:type" content="article">
 <meta property="og:title" content="后端开发项目实战">
-<meta property="og:url" content="http://example.com/2023/05/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:url" content="http://example.com/2023/04/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="Ai吃橘子">
-<meta property="og:description" content="1.TinyWebServer传送门：GitHub - qinguoyi&#x2F;TinyWebServer: Linux下C++轻量级Web服务器、牛客视频  GCC&#x2F;G++ 编译  （预处理 编译 汇编 链接）  静态库的制作与使用 ：gcc&#x2F;g++进行链接时，会把静态库中代码打包到可执行程序中（先得到.o文件，然后利用ar rcs libxxxx.a xxx.o  制作">
+<meta property="og:description" content="TinyWebServer基础知识传送门：GitHub - qinguoyi&#x2F;TinyWebServer: Linux下C++轻量级Web服务器、牛客视频  GCC&#x2F;G++ 编译  （预处理 编译 汇编 链接）  静态库的制作与使用 ：gcc&#x2F;g++进行链接时，会把静态库中代码打包到可执行程序中（先得到.o文件，然后利用ar rcs libxxxx.a xxx.o">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-05-06T07:53:31.000Z">
-<meta property="article:modified_time" content="2023-06-19T10:06:21.323Z">
+<meta property="article:published_time" content="2023-04-06T07:53:31.000Z">
+<meta property="article:modified_time" content="2023-08-15T08:57:38.661Z">
 <meta property="article:tag" content="项目实战">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/05/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">
+<link rel="canonical" href="http://example.com/2023/04/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/05/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/","path":"2023/05/06/后端开发项目实战/","title":"后端开发项目实战"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/","path":"2023/04/06/后端开发项目实战/","title":"后端开发项目实战"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>后端开发项目实战 | Ai吃橘子</title>
@@ -105,7 +105,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-TinyWebServer"><span class="nav-number">1.</span> <span class="nav-text">1.TinyWebServer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">静态库的优缺点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">动态库的优缺点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5"><span class="nav-number">1.4.</span> <span class="nav-text">同步和异步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E6%A8%A1%E5%BC%8F%E5%92%8CProactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">Reactor模式和Proactor模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">Reactor模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">Proactor模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image-20230619145923351-D-GithubBlog-bolg-space-source-posts-%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-image-20230619145923351-png-%E6%A8%A1%E6%8B%9FProactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">![image-20230619145923351](D:\GithubBlog\bolg space\source_posts\后端开发项目实战\image-20230619145923351.png)模拟Proactor模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">1.6.</span> <span class="nav-text">线程池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-CPlusPlusThings"><span class="nav-number">2.</span> <span class="nav-text">2.CPlusPlusThings</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TinyWebServer"><span class="nav-number">1.</span> <span class="nav-text">TinyWebServer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">静态库的优缺点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">动态库的优缺点：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">IO模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">同步和异步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E6%A8%A1%E5%BC%8F%E5%92%8CProactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.3.</span> <span class="nav-text">Reactor模式和Proactor模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.4.</span> <span class="nav-text">Reactor模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.5.</span> <span class="nav-text">Proactor模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image-20230619145923351-D-GithubBlog-bolg-space-source-posts-%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-image-20230619145923351-png-%E6%A8%A1%E6%8B%9FProactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.6.</span> <span class="nav-text">![image-20230619145923351](D:\GithubBlog\bolg space\source_posts\后端开发项目实战\image-20230619145923351.png)模拟Proactor模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">1.3.7.</span> <span class="nav-text">线程池</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%EF%BC%9A%E8%AF%A5%E9%83%A8%E5%88%86%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%B7%B2%E7%BB%8F%E5%AE%8C%E6%88%90%EF%BC%8C%E7%AD%89%E5%BF%99%E5%AE%8C%E8%BF%99%E6%AE%B5%E6%97%B6%E9%97%B4%E4%BD%9C%E8%80%85%E4%BC%9A%E6%8A%8A%E4%BB%A3%E7%A0%81%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.4.</span> <span class="nav-text">项目实战：该部分基础功能已经完成，等忙完这段时间作者会把代码上传</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -152,7 +152,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/06/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -181,14 +181,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-05-06 15:53:31" itemprop="dateCreated datePublished" datetime="2023-05-06T15:53:31+08:00">2023-05-06</time>
+      <time title="Created: 2023-04-06 15:53:31" itemprop="dateCreated datePublished" datetime="2023-04-06T15:53:31+08:00">2023-04-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-19 18:06:21" itemprop="dateModified" datetime="2023-06-19T18:06:21+08:00">2023-06-19</time>
+      <time title="Modified: 2023-08-15 16:57:38" itemprop="dateModified" datetime="2023-08-15T16:57:38+08:00">2023-08-15</time>
     </span>
 
   
@@ -201,7 +201,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="1-TinyWebServer"><a href="#1-TinyWebServer" class="headerlink" title="1.TinyWebServer"></a>1.TinyWebServer</h1><p>传送门：<a href="https://link.zhihu.com/?target=https://github.com/qinguoyi/TinyWebServer">GitHub - qinguoyi&#x2F;TinyWebServer: Linux下C++轻量级Web服务器</a>、<a target="_blank" rel="noopener" href="https://www.nowcoder.com/study/live/504">牛客视频</a></p>
+        <h1 id="TinyWebServer"><a href="#TinyWebServer" class="headerlink" title="TinyWebServer"></a>TinyWebServer</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>传送门：<a href="https://link.zhihu.com/?target=https://github.com/qinguoyi/TinyWebServer">GitHub - qinguoyi&#x2F;TinyWebServer: Linux下C++轻量级Web服务器</a>、<a target="_blank" rel="noopener" href="https://www.nowcoder.com/study/live/504">牛客视频</a></p>
 <ul>
 <li><p>GCC&#x2F;G++ 编译  （预处理 编译 汇编 链接）</p>
 </li>
@@ -223,21 +223,21 @@
 </ul>
 </li>
 </ul>
-<h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><p><strong>阻塞IO：</strong>（会改变线程的状态，阻塞的时候把CPU交出去）用户线程发出IO请求后，内核会查看数据是否准备完毕，在这个数据准备过程中，该线程会一直阻塞在当前步，同时把CPU交出去让别的线程使用。</p>
+<h3 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h3><p><strong>阻塞IO：</strong>（会改变线程的状态，阻塞的时候把CPU交出去）用户线程发出IO请求后，内核会查看数据是否准备完毕，在这个数据准备过程中，该线程会一直阻塞在当前步，同时把CPU交出去让别的线程使用。</p>
 <p><strong>非阻塞IO：</strong>（不会改变线程的状态）当用户线程发起一个read操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个error时，它就知道数据还没有准备好，于是它可以再次发送read操作。在非阻塞IO模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞IO不会交出CPU，而会一直占用CPU进行别的工作，期间不断轮询判断数据是否准备好了。</p>
 <p><strong>多路复用IO：</strong>利用一种函数（select、poll、epoll）去监控多个fd，当有fd准备就绪时，返回可读状态，应用程序再去读取数据。复用IO的基本思路就是通过slect或poll、epoll 来监控多fd ，来达到不必为每个fd创建一个对应的监控线程，从而减少线程资源创建的目的。</p>
 <p><strong>信号驱动IO：</strong>信号驱动IO不是用循环请求询问的方式去监控数据就绪状态，而是在调用sigaction时候建立一个SIGIO的信号联系，当内核数据准备好后通过这个SIGIO信号告知线程数据准备就绪，之后线程就去读取数据。</p>
 <p><em>不管是IO复用还是信号驱动，我们要读取一个数据总是要发起两阶段的请求，第一次发送select请求，询问数据状态是否准备好，第二次发送recevform请求读取数据。这太麻烦了，如果能告诉内核我需要这些数据，然后让它来负责数据准备、拷贝就好了</em></p>
 <p><strong>异步IO：</strong>应用只需要向内核发送一个read 请求,告诉内核它要读取数据后即刻返回；内核收到请求后会建立一个信号联系，当数据准备就绪，内核会主动把数据从内核复制到用户空间，等所有操作都完成之后，内核会发起一个通知告诉应用，我们称这种一劳永逸的模式为异步IO模型。</p>
-<h2 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h2><p>在IO模型里面如果请求方从发起请求到数据最后完成的这一段过程中都需要自己参与，那么这种我们就称为同步请求（线程需要自己去拷贝数据）；反之，如果应用发送完指令后就不再参与过程了，只需要等待最终完成结果的通知，那么这就属于异步（内核帮忙拷贝，线程不需要费心）。</p>
+<h3 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h3><p>在IO模型里面如果请求方从发起请求到数据最后完成的这一段过程中都需要自己参与，那么这种我们就称为同步请求（线程需要自己去拷贝数据）；反之，如果应用发送完指令后就不再参与过程了，只需要等待最终完成结果的通知，那么这就属于异步（内核帮忙拷贝，线程不需要费心）。</p>
 <p>同步阻塞、同步非阻塞，他们不同的只是发起读取请求的时候一个请求阻塞，一个请求不阻塞，但是相同的是，他们都需要应用自己监控整个数据完成的过程。而为什么只有异步非阻塞 而没有异步阻塞呢，因为异步模型下请求指定发送完后就即刻返回了，没有任何后续流程了，所以它注定不会阻塞，所以也就只会有异步非阻塞模型了。</p>
-<h2 id="Reactor模式和Proactor模式"><a href="#Reactor模式和Proactor模式" class="headerlink" title="Reactor模式和Proactor模式"></a>Reactor模式和Proactor模式</h2><h3 id="Reactor模式"><a href="#Reactor模式" class="headerlink" title="Reactor模式"></a><strong>Reactor模式</strong></h3><p>要求<strong>主线程(I&#x2F;O处理单元)只负责监听文件描述符上是否有事件发生</strong>，有的话就立即将该事件通知工作线程（逻辑单元)，将socket 可读可写事件放入请求队列，交给工作线程处理。除此之处<strong>主线程不做任何其他实质性的工作。读写数据，接受新的连接，以及处理客户请求均在工作线程中完成。</strong><br>使用同步IO模拟(以epoll_wait为例）实现的Reactor模式的工作流程是:</p>
+<h3 id="Reactor模式和Proactor模式"><a href="#Reactor模式和Proactor模式" class="headerlink" title="Reactor模式和Proactor模式"></a>Reactor模式和Proactor模式</h3><h3 id="Reactor模式"><a href="#Reactor模式" class="headerlink" title="Reactor模式"></a><strong>Reactor模式</strong></h3><p>要求<strong>主线程(I&#x2F;O处理单元)只负责监听文件描述符上是否有事件发生</strong>，有的话就立即将该事件通知工作线程（逻辑单元)，将socket 可读可写事件放入请求队列，交给工作线程处理。除此之处<strong>主线程不做任何其他实质性的工作。读写数据，接受新的连接，以及处理客户请求均在工作线程中完成。</strong><br>使用同步IO模拟(以epoll_wait为例）实现的Reactor模式的工作流程是:</p>
 <p>1.主线程往epoll内核事件表中注册socket 上的读就绪事件。<br>2.主线程调用epoll_wait等待socket 上有数据可读。<br>3.当socket上有数据可读时,epoll_wait通知主线程。主线程则将socket可读事件放入请求队列。<br>4.睡眠在请求队列上的某个工作线程被唤醒，它从socket 读取数据，并处理客户请求，然后往epoll内核事件表中注册该socket 上的写就绪事件。<br>5.当主线程调用epoll_wait等待socket可写。<br>6.当socket可写时，epoll_wait通知主线程。主线程将socket可写事件放入请求队列。<br>7.睡眠在请求队列上的某个工作线程被唤醒，它往socket上写入服务器处理客户请求的结果。</p>
 <p>![image-20230619145411040](D:\GithubBlog\bolg space\source_posts\后端开发项目实战\image-20230619145411040.png)</p>
 <h3 id="Proactor模式"><a href="#Proactor模式" class="headerlink" title="Proactor模式"></a>Proactor模式</h3><p><strong>Proactor模式将所有I&#x2F;O操作都交给主线程和内核来处理(进行读、写)，工作线程仅仅负责业务逻辑。</strong>使用异步IO模型(以aio_read和aio_write为例)实现的Proactor模式的工作流程是:<br>1.主线程调用aio_read函数向内核注册socket 上的读完成事件，并告诉内核用户读缓冲区的位置，以及读操作完成时如何通知应用程序(这里以信号为例)。<br>2.主线程继续处理其他逻辑。<br>3.当socket上的数据被读入用户缓冲区后，内核将向应用程序发送一个信号，以通知应用程序数据已经可用。4.应用程序预先定义好的信号处理函数选择一个工作线程来处理客户请求。工作线程处理完客户请求后，调用aio_write函数向内核注册socket上的写完成事件，并告诉内核用户写缓冲区的位置，以及写操作完成时如何通知应用程序。<br>5.主线程继续处理其他逻辑。<br>6.当用户缓冲区的数据被写入socket之后，内核将向应用程序发送一个信号，以通知应用程序数据已经发送完毕。<br>7.应用程序预先定义好的信号处理函数选择一个工作线程来做善后处理，比如决定是否关闭socket</p>
 <h3 id="image-20230619145923351-D-GithubBlog-bolg-space-source-posts-后端开发项目实战-image-20230619145923351-png-模拟Proactor模式"><a href="#image-20230619145923351-D-GithubBlog-bolg-space-source-posts-后端开发项目实战-image-20230619145923351-png-模拟Proactor模式" class="headerlink" title="![image-20230619145923351](D:\GithubBlog\bolg space\source_posts\后端开发项目实战\image-20230619145923351.png)模拟Proactor模式"></a>![image-20230619145923351](D:\GithubBlog\bolg space\source_posts\后端开发项目实战\image-20230619145923351.png)模拟Proactor模式</h3><p>使用同步V&#x2F;O方式模拟出Proactor模式。原理是:主线程执行数据读写操作，读写完成之后，主线程向工作线程通知这一”完成事件”。那么从工作线程的角度来看，它们就直接获得了数据读写的结果，接下来要做的只是对读写的结果进行逻辑处理。<br>使用同步I&#x2F;O模型(以epoll_wait为例)模拟出的 Proactor模式的工作流程如下:</p>
 <p>1.主线程往epoll内核事件表中注册socket 上的读就绪事件。<br>2.主线程调用epoll_wait等待socket上有数据可读。<br>3.当socket上有数据可读时，epoll_wait 通知主线程。主线程从socket 循环读取数据，直到没有更多数据可读，然后将读取到的数据封装成一个请求对象并插入请求队列。<br>4.睡眠在请求队列上的某个工作线程被唤醒，它获得请求对象并处理客户请求，然后往epoll内核事件表中注册socket 上的写就绪事件。<br>5.主线程调用epoll_wait等待socket可写。<br>6.当socket可写时，epoll_wait通知主线程。主线程往socket上写入服务器处理客户请求的结果。![image-20230619144612982](D:\GithubBlog\bolg space\source_posts\后端开发项目实战\image-20230619144612982.png)</p>
-<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p>线程池是由服务器预先创建的一组子线程，线程池中的线程数量应该和CPU数星差不多。线程池中的所有子线程都运行着相同的代码。当有新的任务到来时，主线程将通过某种方式选择线程池中的某一个子线程来为之服务。相比与动态的创建子线程，选择一个已经存在的子线程的代价显然要小得多。至于主线程选择哪个子线程来为新任务服务，则有多种方式:</p>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p>线程池是由服务器预先创建的一组子线程，线程池中的线程数量应该和CPU数星差不多。线程池中的所有子线程都运行着相同的代码。当有新的任务到来时，主线程将通过某种方式选择线程池中的某一个子线程来为之服务。相比与动态的创建子线程，选择一个已经存在的子线程的代价显然要小得多。至于主线程选择哪个子线程来为新任务服务，则有多种方式:</p>
 <ul>
 <li>主线程使用某种算法来主动选择子线程。最简单、最常用的算法是随机算法和Round Robin(轮流选取)算法，但更优秀、更智能的算法将使任务在各个工作线程中更均匀地分配，从而减轻服务器的整体压力。</li>
 <li>主线程和所有子线程通过一个共享的工作队列来同步，子线程都睡眠在该工作队列上。当有新的任务到来时，主线程将任务添加到工作队列中。这将唤醒正在等待任务的子线程，不过只有一个子线程将获得新任务的”接管权”，它可以从工作队列中取出任务并执行之，而其他子线程将继续睡眠在工作队列上。</li>
@@ -249,10 +249,7 @@
 <li>当服务器进入正式运行阶段，开始处理客户请求的时候，如果它需要相关的资源，可以直接从池中获取，无需动态分配。</li>
 <li>当服务器处理完一个客户连接后，可以把相关的资源放回池中，无需执行系统调用释放资源。</li>
 </ul>
-<h1 id="2-CPlusPlusThings"><a href="#2-CPlusPlusThings" class="headerlink" title="2.CPlusPlusThings"></a>2.CPlusPlusThings</h1><p>这是一个适合 C++ 初学者从入门到进阶的教程。</p>
-<p>解决了面试者想要深入 C++ 及如何入坑 C++ 的问题。</p>
-<p>除此之外，该仓库拓展了更加深入的语法分析、多线程并发等的知识，是一个比较全面的 C++ 从入门学习到进阶提升的项目。</p>
-
+<h2 id="项目实战：该部分基础功能已经完成，等忙完这段时间作者会把代码上传"><a href="#项目实战：该部分基础功能已经完成，等忙完这段时间作者会把代码上传" class="headerlink" title="项目实战：该部分基础功能已经完成，等忙完这段时间作者会把代码上传"></a>项目实战：该部分基础功能已经完成，等忙完这段时间作者会把代码上传</h2>
     </div>
 
     
@@ -268,11 +265,14 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/04/18/LeetCode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="prev" title="LeetCode刷题记录">
-                  <i class="fa fa-chevron-left"></i> LeetCode刷题记录
+                <a href="/2023/04/01/%E5%8D%9A%E5%AE%A2%E8%AF%B4%E6%98%8E/" rel="prev" title="博客说明">
+                  <i class="fa fa-chevron-left"></i> 博客说明
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/04/10/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="next" title="代码随想录学习记录">
+                  代码随想录学习记录 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
